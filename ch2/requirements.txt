@@ -1,0 +1,13 @@
+# Chapter 2 lab — Bitcoin one-hop trace agent
+# Cryptocurrency Investigation with Agentic AI · Victor Fang · Wiley · 2026
+# Author: https://www.VictorFang.com · https://www.linkedin.com/in/drvictorfang/ · http://x.com/vicfcs
+# Python 3.10+
+#
+# Tested with:
+#   requests==2.32.4
+#   openai==2.43.0
+#
+# openai is required only when running with --ai.
+
+requests>=2.32.4
+openai>=2.43.0

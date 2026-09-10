@@ -1,0 +1,13 @@
+# Chapter 3 lab — Ethereum one-hop tracing / trace agent
+# Cryptocurrency Investigation with Agentic AI · Victor Fang · Wiley · 2026
+# Author: https://www.VictorFang.com · https://www.linkedin.com/in/drvictorfang/ · http://x.com/vicfcs
+# Python 3.10+
+#
+# Tested with:
+#   requests==2.32.4
+#   openai==2.43.0
+#
+# openai is required only when running ch3_eth_trace_agent.py with --ai.
+
+requests>=2.32.4
+openai>=2.43.0

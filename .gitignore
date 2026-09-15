@@ -8,6 +8,7 @@
 
 # Local editor / agent config (not for public book repo)
 .cursor/
+.githooks/
 
 # OS / editor
 .DS_Store

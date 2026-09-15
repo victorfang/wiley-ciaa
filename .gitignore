@@ -6,6 +6,9 @@
 **/.env.*
 !**/.env.example
 
+# Local editor / agent config (not for public book repo)
+.cursor/
+
 # OS / editor
 .DS_Store
 Thumbs.db
@@ -30,4 +33,6 @@ venv/
 **/cache/
 **/output/
 **/results/
+!ch6/results/
+!ch6/results/**
 *.log

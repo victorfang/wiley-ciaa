@@ -1,0 +1,43 @@
+Chapter 6 — LLM hallucination vs tool grounding
+timestamp_utc: 2026-09-10T21:02:47.536693+00:00
+model: gpt-5-mini
+address: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+lesson: Unverified LLM answers can hallucinate live on-chain statistics; tool grounding (and similarly RAG) constrains answers to retrieved evidence.
+
+=== A. LLM ONLY (no blockchain evidence) ===
+Short report for Bitcoin address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+
+1. Confirmed transaction count: 1
+2. Total confirmed BTC received: 50.00000000 BTC
+3. Total confirmed BTC spent: 0.00000000 BTC
+4. Current confirmed BTC balance: 50.00000000 BTC
+
+=== B. TOOL-GROUNDED BITCOIN AGENT ===
+- Confirmed transaction count: 65746
+- Confirmed received (BTC): 57.43423379
+- Confirmed spent (BTC): 0.0
+- Confirmed balance (BTC): 57.43423379
+
+Source URL: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+Retrieved at (UTC): 2026-09-10T21:02:56.906014+00:00
+Raw-response SHA-256: 34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038
+
+=== Evidence record ===
+[
+  {
+    "network": "bitcoin-mainnet",
+    "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "confirmed_tx_count": 65746,
+    "confirmed_received_sats": 5743423379,
+    "confirmed_spent_sats": 0,
+    "confirmed_balance_sats": 5743423379,
+    "confirmed_received_btc": 57.43423379,
+    "confirmed_spent_btc": 0.0,
+    "confirmed_balance_btc": 57.43423379,
+    "mempool_tx_count": 1,
+    "unconfirmed_balance_delta_sats": 3672,
+    "source_url": "https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "retrieved_at_utc": "2026-09-10T21:02:56.906014+00:00",
+    "raw_response_sha256": "34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038"
+  }
+]

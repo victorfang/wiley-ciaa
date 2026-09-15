@@ -1,0 +1,41 @@
+Chapter 6 — Reliable LLMs for Evidence-Based Investigations
+timestamp_utc: 2026-09-15T04:16:10.631174+00:00
+model: gpt-4.1-mini
+address: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+lesson: Unverified LLM answers can hallucinate live on-chain statistics; tool grounding plus a thin harness constrains answers to evidence.
+
+=== A. LLM ONLY (no blockchain evidence) ===
+Bitcoin Address Report: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+
+1. Confirmed transaction count: 305  
+2. Total confirmed BTC received: 68,012.5 BTC  
+3. Total confirmed BTC spent: 67,999.99 BTC  
+4. Current confirmed BTC balance: 12.51 BTC
+
+=== B. TOOL-GROUNDED BITCOIN AGENT ===
+For the Bitcoin address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa, the confirmed transaction count is 65,793. The confirmed received amount is 57.46952256 BTC. The confirmed spent amount is 0 BTC. The confirmed balance is 57.46952256 BTC.
+
+Source URL: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+Retrieval time (UTC): 2026-09-15T04:16:15.050764+00:00
+Raw response SHA-256: 211d8145b302d04ffa9a93adfc23f1a185df04fe3350a0d7c7eb5c9a3196b234
+
+=== Evidence record ===
+[
+  {
+    "ok": true,
+    "network": "bitcoin-mainnet",
+    "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "confirmed_tx_count": 65793,
+    "confirmed_received_sats": 5746952256,
+    "confirmed_spent_sats": 0,
+    "confirmed_balance_sats": 5746952256,
+    "confirmed_received_btc": 57.46952256,
+    "confirmed_spent_btc": 0.0,
+    "confirmed_balance_btc": 57.46952256,
+    "mempool_tx_count": 2,
+    "unconfirmed_balance_delta_sats": 4218,
+    "source_url": "https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "retrieved_at_utc": "2026-09-15T04:16:15.050764+00:00",
+    "raw_response_sha256": "211d8145b302d04ffa9a93adfc23f1a185df04fe3350a0d7c7eb5c9a3196b234"
+  }
+]

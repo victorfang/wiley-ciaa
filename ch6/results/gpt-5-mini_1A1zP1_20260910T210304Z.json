@@ -1,0 +1,38 @@
+{
+  "lesson": "Unverified LLM answers can hallucinate live on-chain statistics; tool grounding (and similarly RAG) constrains answers to retrieved evidence.",
+  "timestamp_utc": "2026-09-10T21:02:47.536693+00:00",
+  "model": "gpt-5-mini",
+  "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+  "paths": {
+    "llm_only": {
+      "description": "Parametric memory only; no chain tool or RAG.",
+      "model": "gpt-5-mini-2025-08-07",
+      "response_id": "chatcmpl-EMgCuPHdcNawN29T9UnhbRvrR3022",
+      "answer": "Short report for Bitcoin address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n1. Confirmed transaction count: 1\n2. Total confirmed BTC received: 50.00000000 BTC\n3. Total confirmed BTC spent: 0.00000000 BTC\n4. Current confirmed BTC balance: 50.00000000 BTC"
+    },
+    "tool_grounded": {
+      "description": "Must call get_bitcoin_address_summary before answering.",
+      "model": "gpt-5-mini-2025-08-07",
+      "response_id": "chatcmpl-EMgD3QLUUwYQXvGqzxmS8WqpAaCaW",
+      "answer": "- Confirmed transaction count: 65746\n- Confirmed received (BTC): 57.43423379\n- Confirmed spent (BTC): 0.0\n- Confirmed balance (BTC): 57.43423379\n\nSource URL: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\nRetrieved at (UTC): 2026-09-10T21:02:56.906014+00:00\nRaw-response SHA-256: 34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038",
+      "evidence": [
+        {
+          "network": "bitcoin-mainnet",
+          "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+          "confirmed_tx_count": 65746,
+          "confirmed_received_sats": 5743423379,
+          "confirmed_spent_sats": 0,
+          "confirmed_balance_sats": 5743423379,
+          "confirmed_received_btc": 57.43423379,
+          "confirmed_spent_btc": 0.0,
+          "confirmed_balance_btc": 57.43423379,
+          "mempool_tx_count": 1,
+          "unconfirmed_balance_delta_sats": 3672,
+          "source_url": "https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+          "retrieved_at_utc": "2026-09-10T21:02:56.906014+00:00",
+          "raw_response_sha256": "34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "lesson": "Unverified LLM answers can hallucinate live on-chain statistics; tool grounding plus a thin harness constrains answers to evidence.",
+  "timestamp_utc": "2026-09-10T21:13:13.378977+00:00",
+  "model": "gpt-4o-mini",
+  "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+  "paths": {
+    "llm_only": {
+      "description": "Parametric memory only; no chain tool.",
+      "model": "gpt-4o-mini-2024-07-18",
+      "response_id": "chatcmpl-EMgN1kqtjHrZkMEmyUKeb2M6TS6qs",
+      "answer": "As of my last knowledge update, here are the details for Bitcoin address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa:\n\n1. Confirmed transaction count: 1\n2. Total confirmed BTC received: 50 BTC\n3. Total confirmed BTC spent: 0 BTC\n4. Current confirmed BTC balance: 50 BTC\n\nPlease note that these figures are based on historical data and may not reflect the current state of the address."
+    },
+    "tool_grounded": {
+      "description": "Must call get_bitcoin_address_summary; harness checks tool health and answer-vs-evidence match.",
+      "model": "gpt-4o-mini-2024-07-18",
+      "response_id": "chatcmpl-EMgN4svt940F45TsBv13R6Cfpvadr",
+      "answer": "- Confirmed transaction count: 65,746\n- Confirmed received: 57.43423379 BTC\n- Confirmed spent: 0.0 BTC\n- Confirmed balance: 57.43423379 BTC\n\nSource URL: [Blockstream](https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa)  \nRetrieval time: 2026-09-10T21:13:18.023854+00:00  \nRaw-response SHA-256: 34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038",
+      "evidence": [
+        {
+          "ok": true,
+          "network": "bitcoin-mainnet",
+          "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+          "confirmed_tx_count": 65746,
+          "confirmed_received_sats": 5743423379,
+          "confirmed_spent_sats": 0,
+          "confirmed_balance_sats": 5743423379,
+          "confirmed_received_btc": 57.43423379,
+          "confirmed_spent_btc": 0.0,
+          "confirmed_balance_btc": 57.43423379,
+          "mempool_tx_count": 1,
+          "unconfirmed_balance_delta_sats": 3672,
+          "source_url": "https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+          "retrieved_at_utc": "2026-09-10T21:13:18.023854+00:00",
+          "raw_response_sha256": "34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038"
+        }
+      ],
+      "harness": {
+        "tool_ok": true,
+        "answer_checked": true
+      }
+    }
+  }
+}

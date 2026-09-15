@@ -39,9 +39,9 @@ This codebase is built for **education and simplicity**. It prefers **open-sourc
 | [`ch1/`](ch1/) | First AI agent — WannaCry Bitcoin ransomware screen | ✅ |
 | [`ch2/`](ch2/) | Bitcoin one-hop tracing — Twitter hack case | ✅ |
 | [`ch3/`](ch3/) | Ethereum one-hop tracing — multi-layer value edges | ✅ |
-| [`ch4/`](ch4/) | Compliance, off-ramps, and legal reality | |
+| [`ch4/`](ch4/) | Compliance, off-ramps, and legal reality — FAKE TRAINING SAR draft | ✅ |
 | [`ch5/`](ch5/) | ML triage + LangGraph agent — PowerShell / Bitcoin IOCs | ✅ |
-| [`ch6/`](ch6/) | Reliable LLMs for evidence-based investigations | |
+| [`ch6/`](ch6/) | Reliable LLMs — hallucination vs tool-grounded Bitcoin evidence | ✅ |
 
 ## Example: run Chapter 1
 

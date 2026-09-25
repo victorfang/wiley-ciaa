@@ -54,7 +54,7 @@ pip install -r requirements.txt
 python3 ch1_ai_agent_bitcoin_ransomware.py
 ```
 
-Optional: pass another address as an argument. Default model is `gpt-4.1-mini` (`OPENAI_MODEL` to override).
+Optional: pass another address as an argument. Default model is `gpt-6-luna` (`OPENAI_MODEL` to override).
 
 ## Shared investigative rules
 

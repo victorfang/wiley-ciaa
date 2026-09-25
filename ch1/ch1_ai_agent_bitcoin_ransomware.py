@@ -5,6 +5,7 @@
 Loads OPENAI_API_KEY from ch1/.env and saves the reply as <address>_<model>.txt.
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -13,7 +14,7 @@ from openai import OpenAI
 
 load_dotenv(Path(__file__).with_name(".env"))
 
-MODEL = "gpt-6-luna"
+MODEL = os.getenv("OPENAI_MODEL", "gpt-6-luna")
 address = sys.argv[1] if len(sys.argv) > 1 else "12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw"
 
 client = OpenAI()

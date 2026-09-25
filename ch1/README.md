@@ -14,7 +14,7 @@ cp .env.example .env   # set OPENAI_API_KEY_VF (or OPENAI_API_KEY)
 pip install -r requirements.txt
 ```
 
-Optional: `OPENAI_MODEL` (default `gpt-4.1-mini`).
+Model: `gpt-6-luna` (GPT-6). Override with `OPENAI_MODEL` if your API project uses another GPT-6 id (`gpt-6-sol`, `gpt-6-astra`).
 
 ## Run
 

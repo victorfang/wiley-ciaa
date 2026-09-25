@@ -1,0 +1,11 @@
+{
+  "model": "gpt-6-luna",
+  "address": "12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw",
+  "ransomware_related": true,
+  "confidence": "high",
+  "reasoning": "This address is publicly identified by Sophos researchers as a Bitcoin address associated with WCry (WannaCry) ransomware. Palo Alto Networks also lists it among addresses linked to the WannaCry attackers and reports ransom payments received at it. This supports a strong ransomware-related attribution, though it does not by itself establish who currently controls the address.",
+  "sources": [
+    "Sophos, WCry (WannaCry) Ransomware Analysis: ([dev.preview.sophos.com](https://dev.preview.sophos.com/en-us/research/wcry-ransomware-analysis?utm_source=openai))",
+    "Palo Alto Networks Unit 42, Threat Brief: WanaCrypt0r: ([unit42.paloaltonetworks.com](https://unit42.paloaltonetworks.com/unit42-threat-brief-wanacrypt0r-know/?utm_source=openai))"
+  ]
+}

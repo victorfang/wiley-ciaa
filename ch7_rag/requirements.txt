@@ -1,0 +1,13 @@
+# Chapter 7 blockchain RAG lab
+# Chapter 7 companion pins.
+# These versions resolve to OpenAI Python SDK 2.54.0 in the reviewed environment.
+
+llama-index-core==0.14.24
+llama-index-embeddings-openai==0.7.0
+llama-index-llms-openai==0.8.1
+llama-index-vector-stores-chroma==0.6.0
+chromadb==1.5.9
+numpy==2.3.5
+matplotlib==3.10.8
+pydantic==2.13.5
+python-dotenv==1.1.1

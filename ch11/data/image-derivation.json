@@ -1,0 +1,15 @@
+{
+  "created_date": "2026-09-30",
+  "parent_path": "images/ch11/al-qassam-training-copy.png",
+  "parent_sha256": "7d7668262ab0b4570207f2573140b38899067fc479ecdc9cb69b3a8d964dbd22",
+  "derivative_path": "images/ch11/al-qassam-address-crop.png",
+  "derivative_sha256": "ac857161fea6650c5324610644568169e9725894bd5789ce5c7fc8a621b860e9",
+  "operation": "OpenCV pixel crop only; no resizing, enhancement, or generative editing",
+  "coordinates_xyxy_exclusive": [
+    238,
+    518,
+    550,
+    570
+  ],
+  "purpose": "optional PSM 7 experiment; not used to substitute the preserved original in the primary lab"
+}

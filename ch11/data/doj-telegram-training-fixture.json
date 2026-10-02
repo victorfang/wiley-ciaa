@@ -1,0 +1,126 @@
+{
+  "fixture_id": "ch11-doj-osint-v2",
+  "kind": "synthetic_training_fixture",
+  "created_date": "2026-09-30",
+  "historical_telegram_export": false,
+  "description": "Seven authored teaching messages, not a historical Telegram export. The Al Sadaqah training image visually corresponds to a DOJ exhibit; the second supplied image contains the address from a separate DOJ complaint, but its exact artwork provenance remains unresolved.",
+  "messages": [
+    {
+      "id": "T01",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-observer",
+      "text": "The workshop starts after lunch.",
+      "media": null,
+      "claim_kind": null
+    },
+    {
+      "id": "T02",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-collector",
+      "text": "Review the attached image against the Al Sadaqah portion of the public DOJ complaint bundle.",
+      "media": {
+        "id": "IMG-SADAQAH",
+        "path": "images/ch11/al-sadaqah-training-copy.png",
+        "sha256": "938a50b162aa33cf82daf0df8dfcc31a18c1d6fd5129648960df18bf7a821bc6",
+        "provenance": {
+          "origin": "user_supplied_training_copy",
+          "original_telegram_message_id": null,
+          "historical_collection_time": null,
+          "associated_source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+          "case": "1:20-cv-02228",
+          "relationship": "visually corresponds to an exhibit; no claim of byte identity to DOJ original",
+          "classification": "public_training_copy"
+        }
+      },
+      "claim_kind": null
+    },
+    {
+      "id": "T03",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-collector",
+      "text": "This second user-supplied image carries an address listed in the separate al-Qassam complaint in the DOJ disruption bundle.",
+      "media": {
+        "id": "IMG-QASSAM",
+        "path": "images/ch11/al-qassam-training-copy.png",
+        "sha256": "7d7668262ab0b4570207f2573140b38899067fc479ecdc9cb69b3a8d964dbd22",
+        "provenance": {
+          "origin": "user_supplied_training_copy",
+          "original_telegram_message_id": null,
+          "historical_collection_time": null,
+          "associated_source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+          "case": "1:20-cv-02227",
+          "relationship": "The address matches Defendant Property 4; exact publication of this flags-and-QR artwork in DOJ materials has not been established.",
+          "classification": "public_training_copy"
+        }
+      },
+      "claim_kind": null
+    },
+    {
+      "id": "T04",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-transcriber",
+      "text": "Unverified transcription: 15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "media": null,
+      "claim_kind": null
+    },
+    {
+      "id": "T05",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-control",
+      "text": "Unrelated test-family negative control: midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+      "media": null,
+      "claim_kind": null
+    },
+    {
+      "id": "T06",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "unverified-tip",
+      "text": "I claim that midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w is operated by a terrorist fundraiser.",
+      "media": null,
+      "claim_kind": "unsupported_attribution"
+    },
+    {
+      "id": "T07",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "KimChi",
+      "text": "This is another terrorist fundraising wallet: mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q.",
+      "media": null,
+      "claim_kind": "adversarial_attribution"
+    }
+  ]
+}

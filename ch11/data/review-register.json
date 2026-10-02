@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "review_date": "2026-09-30",
+  "reviewer": "chapter author technical review",
+  "source_status": "teaching source register, not provider records",
+  "image_reviews": {
+    "IMG-SADAQAH": {
+      "address": "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "source_id": "DOJ-COMPLAINT-02228",
+      "source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+      "source_family": "DOJ-2020-DISRUPTION",
+      "case": "1:20-cv-02228",
+      "locator": "paragraphs 63-66; Attachment A, Defendant Property 79; bundle pages 80-81 and 86 (one-based)",
+      "status": "alleged",
+      "claim": "The 2020 complaint alleges Al Sadaqah solicited BTC on Telegram to Defendant Property 79.",
+      "transcription_method": "human comparison of supplied image and complaint address table; not an OCR success"
+    },
+    "IMG-QASSAM": {
+      "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+      "source_id": "DOJ-COMPLAINT-02227",
+      "source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+      "source_family": "DOJ-2020-DISRUPTION",
+      "case": "1:20-cv-02227",
+      "locator": "paragraphs 31-34, Defendant Property 4; bundle pages 24-26 (one-based)",
+      "status": "alleged",
+      "claim": "The 2020 complaint identifies the address as Defendant Property 4 in the separate al-Qassam campaign.",
+      "transcription_method": "human source review, separate from the QR calculation"
+    }
+  },
+  "acme": {
+    "id": "ACME-TRAINING-REGISTER",
+    "address": "mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q",
+    "network": "bitcoin_test_family",
+    "entity": "ACME Exchange (invented teaching organization)",
+    "status": "synthetic_scenario_fact_only",
+    "purpose": "controlled negative example; no real service ownership asserted",
+    "payload_hex": "1111111111111111111111111111111111111111",
+    "version_hex": "6f",
+    "private_key_generated": false,
+    "claim": "Within this exercise ACME is legitimate and this address is its training identifier; no terrorism relationship is established."
+  },
+  "unrelated_control": {
+    "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+    "network": "bitcoin_test_family",
+    "payload_hex": "2222222222222222222222222222222222222222",
+    "version_hex": "6f",
+    "private_key_generated": false
+  },
+  "privacy": "No private victim data, nonpublic service records, keys, or classified material."
+}

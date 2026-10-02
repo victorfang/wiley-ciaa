@@ -1,0 +1,42 @@
+{
+  "record_id": "LEDGER-2018-10-28",
+  "evidence_type": "public_explorer_response",
+  "network": "bitcoin_mainnet",
+  "asset": "BTC",
+  "base_unit": "satoshi",
+  "decimals": 8,
+  "txid": "87b2309f38e69b89867ea99e6dd77c691fb3a687343e280ebf26df53689aa200",
+  "source_url": "https://blockstream.info/api/tx/87b2309f38e69b89867ea99e6dd77c691fb3a687343e280ebf26df53689aa200",
+  "collected_date_utc": "2026-09-30",
+  "raw_path": "data/ledger-transaction.raw.json",
+  "raw_sha256": "e5791ef9fa92bea80ee311ad59381f1a754626683e796221227da158bea9cda2",
+  "confirmed": true,
+  "block_height": 547708,
+  "block_hash": "00000000000000000010b0bbceef622ec8ee3a97fdc80e67d65eee7f8d69b97d",
+  "block_time_utc": "2018-10-28T17:08:36Z",
+  "inputs": [
+    {
+      "input_index": 0,
+      "previous_txid": "cdfddcdc71b22e20054da0541f622d8b1535305ee616669d02d5ba29479d9abd",
+      "previous_output_index": 0,
+      "previous_output_address": "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "value_base_units": 594775
+    },
+    {
+      "input_index": 1,
+      "previous_txid": "d228d4ae99ab915b2f17dfea7690e11aeb88a0fedf6ce44294df76e23d5866a7",
+      "previous_output_index": 0,
+      "previous_output_address": "1BQAPyku1ZibWGAgd8QePpW1vAKHowqLez",
+      "value_base_units": 1733177
+    }
+  ],
+  "outputs": [
+    {
+      "output_index": 0,
+      "address": "1FGhgLbMzrUV5mgwX9nkEeqHbKbUK29nbQ",
+      "value_base_units": 2324649
+    }
+  ],
+  "fee_base_units": 3303,
+  "limitations": "Explorer-derived snapshot, not independently verified with a full node. Input association is an on-chain observation; common ownership and any terrorism purpose require separate evidence. This optional handoff record is not loaded by the 100-line agent."
+}

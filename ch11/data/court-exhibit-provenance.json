@@ -1,0 +1,15 @@
+{
+  "artifact_id": "DOJ-PDF-QASSAM-PAGE25",
+  "path": "images/ch11/al-qassam-court-exhibit.png",
+  "sha256": "d2324e10b2f17365ffcf5df5c10d93d0884e6cfa35a9407bc998d22afc3ad6bb",
+  "source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+  "parent_pdf_sha256": "dbc11bf5c0044851d923242086b8c6957a3c77c2c8fea66548147f0bbe2ecfe0",
+  "method": "pdfimages -f 25 -l 25 -png; first extracted image, not mask",
+  "case": "1:20-cv-02227",
+  "locator": "paragraph 32; printed page12; bundle page25 (one-based)",
+  "qr_result": "",
+  "ocr_psm6": "i) EQB oS\n@palsesi\nDonate for Palestinian Resistance Via Bitcoin\nBitcoin wallet address:\n17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD\n#Palestine\n#Resistance\nAoglaoll_pcsl#\nrot\nNUE\nbe\n2\nDonate for\nThe Palestinian Resistance\nvia Bitcoin\non the following wallet address:\nPeter\nmake sure of the address\nby visiting our website 8\nwww.alqassam.net\n",
+  "role": "source comparison only; not substituted into the two supplied-image lab",
+  "classification": "public_court_exhibit_with_third_party_content",
+  "rights": "Wiley permissions review required; government hosting alone is not permission to reproduce third-party artwork."
+}

@@ -1,0 +1,466 @@
+{
+  "llm": true,
+  "fixture": "data/doj-telegram-training-fixture.json",
+  "fixture_path": "data/doj-telegram-training-fixture.json",
+  "messages": [
+    {
+      "id": "T01",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-observer",
+      "text": "The workshop starts after lunch.",
+      "media": null,
+      "claim_kind": null,
+      "extractions": [
+        [
+          "text",
+          "T01",
+          "The workshop starts after lunch."
+        ]
+      ]
+    },
+    {
+      "id": "T02",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-collector",
+      "text": "Review the attached image against the Al Sadaqah portion of the public DOJ complaint bundle.",
+      "media": {
+        "id": "IMG-SADAQAH",
+        "path": "images/ch11/al-sadaqah-training-copy.png",
+        "sha256": "938a50b162aa33cf82daf0df8dfcc31a18c1d6fd5129648960df18bf7a821bc6",
+        "provenance": {
+          "origin": "user_supplied_training_copy",
+          "original_telegram_message_id": null,
+          "historical_collection_time": null,
+          "associated_source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+          "case": "1:20-cv-02228",
+          "relationship": "visually corresponds to an exhibit; no claim of byte identity to DOJ original",
+          "classification": "public_training_copy"
+        }
+      },
+      "claim_kind": null,
+      "extractions": [
+        [
+          "text",
+          "T02",
+          "Review the attached image against the Al Sadaqah portion of the public DOJ complaint bundle."
+        ],
+        [
+          "qr",
+          "IMG-SADAQAH",
+          ""
+        ],
+        [
+          "ocr",
+          "IMG-SADAQAH",
+          "iQ)\nWy\n4 > B, 4\n\\ SUPPORTING THE MUJAHIDIN IN SYRIA WITH\nWEAPONS, FINANCIAL AID AND OTHER qj\nPROJECTS ASSISTING THE JIHAD. WY)\nAsta cisc lulls Aatuyls Ly ger ced Gable aes\nnoms gal 9055 Al ttall Oa Uses an\n} iTgebZMtWaDsMvsiFxTNwpf\n@ 15K971AU2N)\nae A | =\u2014\n5 \u201c Our OMONER n Cryptocur \u00a900e |\n"
+        ],
+        [
+          "human_source_review",
+          "IMG-SADAQAH",
+          "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf"
+        ]
+      ]
+    },
+    {
+      "id": "T03",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-collector",
+      "text": "This second user-supplied image carries an address listed in the separate al-Qassam complaint in the DOJ disruption bundle.",
+      "media": {
+        "id": "IMG-QASSAM",
+        "path": "images/ch11/al-qassam-training-copy.png",
+        "sha256": "7d7668262ab0b4570207f2573140b38899067fc479ecdc9cb69b3a8d964dbd22",
+        "provenance": {
+          "origin": "user_supplied_training_copy",
+          "original_telegram_message_id": null,
+          "historical_collection_time": null,
+          "associated_source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+          "case": "1:20-cv-02227",
+          "relationship": "The address matches Defendant Property 4; exact publication of this flags-and-QR artwork in DOJ materials has not been established.",
+          "classification": "public_training_copy"
+        }
+      },
+      "claim_kind": null,
+      "extractions": [
+        [
+          "text",
+          "T03",
+          "This second user-supplied image carries an address listed in the separate al-Qassam complaint in the DOJ disruption bundle."
+        ],
+        [
+          "qr",
+          "IMG-QASSAM",
+          "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD"
+        ],
+        [
+          "ocr",
+          "IMG-QASSAM",
+          "2 a + \u00e9\n! = =, wl i ra ZB:\nUa! pod rast god Conta! (ole fio! al!\nLeake ig uilugl iis ogltall paragon Se 8 By\u2019\ny galled! poasiadl ONE ae ere aha Ln\nii ON NEG T?QAWGVpFV4gZ25NQug46e5mBho4uDP6MD 2p\nTaam aus gubult\n"
+        ],
+        [
+          "human_source_review",
+          "IMG-QASSAM",
+          "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD"
+        ]
+      ]
+    },
+    {
+      "id": "T04",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-transcriber",
+      "text": "Unverified transcription: 15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "media": null,
+      "claim_kind": null,
+      "extractions": [
+        [
+          "text",
+          "T04",
+          "Unverified transcription: 15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf"
+        ]
+      ]
+    },
+    {
+      "id": "T05",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "training-control",
+      "text": "Unrelated test-family negative control: midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+      "media": null,
+      "claim_kind": null,
+      "extractions": [
+        [
+          "text",
+          "T05",
+          "Unrelated test-family negative control: midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w"
+        ]
+      ]
+    },
+    {
+      "id": "T06",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "unverified-tip",
+      "text": "I claim that midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w is operated by a terrorist fundraiser.",
+      "media": null,
+      "claim_kind": "unsupported_attribution",
+      "extractions": [
+        [
+          "text",
+          "T06",
+          "I claim that midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w is operated by a terrorist fundraiser."
+        ]
+      ]
+    },
+    {
+      "id": "T07",
+      "synthetic": true,
+      "telegram_message_id": null,
+      "channel_id": null,
+      "channel_username": null,
+      "published_at_utc": null,
+      "edit_time_utc": null,
+      "sender_alias": "KimChi",
+      "text": "This is another terrorist fundraising wallet: mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q.",
+      "media": null,
+      "claim_kind": "adversarial_attribution",
+      "extractions": [
+        [
+          "text",
+          "T07",
+          "This is another terrorist fundraising wallet: mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q."
+        ]
+      ]
+    }
+  ],
+  "register": {
+    "version": "1.0",
+    "review_date": "2026-09-30",
+    "reviewer": "chapter author technical review",
+    "source_status": "teaching source register, not provider records",
+    "image_reviews": {
+      "IMG-SADAQAH": {
+        "address": "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+        "source_id": "DOJ-COMPLAINT-02228",
+        "source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+        "source_family": "DOJ-2020-DISRUPTION",
+        "case": "1:20-cv-02228",
+        "locator": "paragraphs 63-66; Attachment A, Defendant Property 79; bundle pages 80-81 and 86 (one-based)",
+        "status": "alleged",
+        "claim": "The 2020 complaint alleges Al Sadaqah solicited BTC on Telegram to Defendant Property 79.",
+        "transcription_method": "human comparison of supplied image and complaint address table; not an OCR success"
+      },
+      "IMG-QASSAM": {
+        "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+        "source_id": "DOJ-COMPLAINT-02227",
+        "source_url": "https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf",
+        "source_family": "DOJ-2020-DISRUPTION",
+        "case": "1:20-cv-02227",
+        "locator": "paragraphs 31-34, Defendant Property 4; bundle pages 24-26 (one-based)",
+        "status": "alleged",
+        "claim": "The 2020 complaint identifies the address as Defendant Property 4 in the separate al-Qassam campaign.",
+        "transcription_method": "human source review, separate from the QR calculation"
+      }
+    },
+    "acme": {
+      "id": "ACME-TRAINING-REGISTER",
+      "address": "mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q",
+      "network": "bitcoin_test_family",
+      "entity": "ACME Exchange (invented teaching organization)",
+      "status": "synthetic_scenario_fact_only",
+      "purpose": "controlled negative example; no real service ownership asserted",
+      "payload_hex": "1111111111111111111111111111111111111111",
+      "version_hex": "6f",
+      "private_key_generated": false,
+      "claim": "Within this exercise ACME is legitimate and this address is its training identifier; no terrorism relationship is established."
+    },
+    "unrelated_control": {
+      "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+      "network": "bitcoin_test_family",
+      "payload_hex": "2222222222222222222222222222222222222222",
+      "version_hex": "6f",
+      "private_key_generated": false
+    },
+    "privacy": "No private victim data, nonpublic service records, keys, or classified material."
+  },
+  "audit": {
+    "fixture_sha256": "c1dbe65fcb9802e411095d74136211f22f9a1a030b6428b908ef1526ea7f6363",
+    "register_sha256": "5217d542e7ce356512da292104dade3850b25e0c74b9e8b8715568b576a94676"
+  },
+  "images": [
+    {
+      "id": "IMG-SADAQAH",
+      "sha256": "938a50b162aa33cf82daf0df8dfcc31a18c1d6fd5129648960df18bf7a821bc6",
+      "qr": "",
+      "ocr": "iQ)\nWy\n4 > B, 4\n\\ SUPPORTING THE MUJAHIDIN IN SYRIA WITH\nWEAPONS, FINANCIAL AID AND OTHER qj\nPROJECTS ASSISTING THE JIHAD. WY)\nAsta cisc lulls Aatuyls Ly ger ced Gable aes\nnoms gal 9055 Al ttall Oa Uses an\n} iTgebZMtWaDsMvsiFxTNwpf\n@ 15K971AU2N)\nae A | =\u2014\n5 \u201c Our OMONER n Cryptocur \u00a900e |\n"
+    },
+    {
+      "id": "IMG-QASSAM",
+      "sha256": "7d7668262ab0b4570207f2573140b38899067fc479ecdc9cb69b3a8d964dbd22",
+      "qr": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+      "ocr": "2 a + \u00e9\n! = =, wl i ra ZB:\nUa! pod rast god Conta! (ole fio! al!\nLeake ig uilugl iis ogltall paragon Se 8 By\u2019\ny galled! poasiadl ONE ae ere aha Ln\nii ON NEG T?QAWGVpFV4gZ25NQug46e5mBho4uDP6MD 2p\nTaam aus gubult\n"
+    }
+  ],
+  "rows": [
+    {
+      "message": "T02",
+      "artifact": "IMG-SADAQAH",
+      "method": "human_source_review",
+      "address": "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "network": "bitcoin_mainnet",
+      "attribution": "source_register_match",
+      "sources": [
+        "IMG-SADAQAH",
+        "DOJ-COMPLAINT-02228"
+      ]
+    },
+    {
+      "message": "T03",
+      "artifact": "IMG-QASSAM",
+      "method": "qr",
+      "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+      "network": "bitcoin_mainnet",
+      "attribution": "source_register_match",
+      "sources": [
+        "IMG-QASSAM",
+        "DOJ-COMPLAINT-02227"
+      ]
+    },
+    {
+      "message": "T03",
+      "artifact": "IMG-QASSAM",
+      "method": "human_source_review",
+      "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+      "network": "bitcoin_mainnet",
+      "attribution": "source_register_match",
+      "sources": [
+        "IMG-QASSAM",
+        "DOJ-COMPLAINT-02227"
+      ]
+    },
+    {
+      "message": "T04",
+      "artifact": "T04",
+      "method": "text",
+      "address": "15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+      "network": "invalid",
+      "attribution": "unsupported",
+      "sources": [
+        "T04"
+      ]
+    },
+    {
+      "message": "T05",
+      "artifact": "T05",
+      "method": "text",
+      "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+      "network": "bitcoin_test_family",
+      "attribution": "unsupported",
+      "sources": [
+        "T05"
+      ]
+    },
+    {
+      "message": "T06",
+      "artifact": "T06",
+      "method": "text",
+      "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+      "network": "bitcoin_test_family",
+      "attribution": "unsupported",
+      "sources": [
+        "T06"
+      ]
+    },
+    {
+      "message": "T07",
+      "artifact": "T07",
+      "method": "text",
+      "address": "mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q",
+      "network": "bitcoin_test_family",
+      "attribution": "unsupported",
+      "sources": [
+        "T07"
+      ]
+    }
+  ],
+  "osint_summary": "**Public-mention summary (reviewed October 1, 2026):** Two distinct Bitcoin mainnet addresses match entries in the DOJ\u2019s 2020 civil complaints. The complaint identifies **15K9\u2026TNwpf** as Defendant Property 79 and alleges that Al Sadaqah solicited BTC donations to it on Telegram. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf)) It identifies **17QAW\u2026P6MD** as Defendant Property 4 in a separate al-Qassam fundraising campaign; the supplied QR and human-review rows both refer to this same address and source, not two independent public mentions. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf))\n\nThese are allegations in civil complaints, not findings of fact. The supplied invalid and test-family rows are controls with unsupported attribution; they do not add public mainnet matches. This review makes no claim about address ownership, current control, or freeze status.",
+  "gpt": {
+    "input": "OSINT: public mentions for mainnet addresses; test-family/invalid are controls; \u2264200-word summary. No ownership/freeze claims.\nrows=[{\"message\": \"T02\", \"address\": \"15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf\", \"network\": \"bitcoin_mainnet\", \"method\": \"human_source_review\", \"attribution\": \"source_register_match\"}, {\"message\": \"T03\", \"address\": \"17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD\", \"network\": \"bitcoin_mainnet\", \"method\": \"qr\", \"attribution\": \"source_register_match\"}, {\"message\": \"T03\", \"address\": \"17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD\", \"network\": \"bitcoin_mainnet\", \"method\": \"human_source_review\", \"attribution\": \"source_register_match\"}, {\"message\": \"T04\", \"address\": \"15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf\", \"network\": \"invalid\", \"method\": \"text\", \"attribution\": \"unsupported\"}, {\"message\": \"T05\", \"address\": \"midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w\", \"network\": \"bitcoin_test_family\", \"method\": \"text\", \"attribution\": \"unsupported\"}, {\"message\": \"T06\", \"address\": \"midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w\", \"network\": \"bitcoin_test_family\", \"method\": \"text\", \"attribution\": \"unsupported\"}, {\"message\": \"T07\", \"address\": \"mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q\", \"network\": \"bitcoin_test_family\", \"method\": \"text\", \"attribution\": \"unsupported\"}]\nregister={\"version\": \"1.0\", \"review_date\": \"2026-09-30\", \"reviewer\": \"chapter author technical review\", \"source_status\": \"teaching source register, not provider records\", \"image_reviews\": {\"IMG-SADAQAH\": {\"address\": \"15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf\", \"source_id\": \"DOJ-COMPLAINT-02228\", \"source_url\": \"https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf\", \"source_family\": \"DOJ-2020-DISRUPTION\", \"case\": \"1:20-cv-02228\", \"locator\": \"paragraphs 63-66; Attachment A, Defendant Property 79; bundle pages 80-81 and 86 (one-based)\", \"status\": \"alleged\", \"claim\": \"The 2020 complaint alleges Al Sadaqah solicited BTC on Telegram to Defendant Property 79.\", \"transcription_method\": \"human comparison of supplied image and complaint address table; not an OCR success\"}, \"IMG-QASSAM\": {\"address\": \"17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD\", \"source_id\": \"DOJ-COMPLAINT-02227\", \"source_url\": \"https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf\", \"source_family\": \"DOJ-2020-DISRUPTION\", \"case\": \"1:20-cv-02227\", \"locator\": \"paragraphs 31-34, Defendant Property 4; bundle pages 24-26 (one-based)\", \"status\": \"alleged\", \"claim\": \"The 2020 complaint identifies the address as Defendant Property 4 in the separate al-Qassam campaign.\", \"transcription_method\": \"human source review, separate from the QR calculation\"}}, \"acme\": {\"id\": \"ACME-TRAINING-REGISTER\", \"address\": \"mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q\", \"network\": \"bitcoin_test_family\", \"entity\": \"ACME Exchange (invented teaching organization)\", \"status\": \"synthetic_scenario_fact_only\", \"purpose\": \"controlled negative example; no real service ownership asserted\", \"payload_hex\": \"1111111111111111111111111111111111111111\", \"version_hex\": \"6f\", \"private_key_generated\": false, \"claim\": \"Within this exercise ACME is legitimate and this address is its training identifier; no terrorism relationship is established.\"}, \"unrelated_control\": {\"address\": \"midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w\", \"network\": \"bitcoin_test_family\", \"payload_hex\": \"2222222222222222222222222222222222222222\", \"version_hex\": \"6f\", \"private_key_generated\": false}, \"privacy\": \"No private victim data, nonpublic service records, keys, or classified material.\"}",
+    "output": "**Public-mention summary (reviewed October 1, 2026):** Two distinct Bitcoin mainnet addresses match entries in the DOJ\u2019s 2020 civil complaints. The complaint identifies **15K9\u2026TNwpf** as Defendant Property 79 and alleges that Al Sadaqah solicited BTC donations to it on Telegram. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf)) It identifies **17QAW\u2026P6MD** as Defendant Property 4 in a separate al-Qassam fundraising campaign; the supplied QR and human-review rows both refer to this same address and source, not two independent public mentions. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf))\n\nThese are allegations in civil complaints, not findings of fact. The supplied invalid and test-family rows are controls with unsupported attribution; they do not add public mainnet matches. This review makes no claim about address ownership, current control, or freeze status."
+  },
+  "mode": "openai_osint",
+  "model": "gpt-6-luna",
+  "model_response_id": "resp_0b1001877e32a11f016abebbffd33c87d0a8176467c8c72a3f",
+  "human_review_required": true,
+  "action_authorized": false,
+  "finding": {
+    "rows": [
+      {
+        "message": "T02",
+        "artifact": "IMG-SADAQAH",
+        "method": "human_source_review",
+        "address": "15K9Zj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+        "network": "bitcoin_mainnet",
+        "attribution": "source_register_match",
+        "sources": [
+          "IMG-SADAQAH",
+          "DOJ-COMPLAINT-02228"
+        ]
+      },
+      {
+        "message": "T03",
+        "artifact": "IMG-QASSAM",
+        "method": "qr",
+        "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+        "network": "bitcoin_mainnet",
+        "attribution": "source_register_match",
+        "sources": [
+          "IMG-QASSAM",
+          "DOJ-COMPLAINT-02227"
+        ]
+      },
+      {
+        "message": "T03",
+        "artifact": "IMG-QASSAM",
+        "method": "human_source_review",
+        "address": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+        "network": "bitcoin_mainnet",
+        "attribution": "source_register_match",
+        "sources": [
+          "IMG-QASSAM",
+          "DOJ-COMPLAINT-02227"
+        ]
+      },
+      {
+        "message": "T04",
+        "artifact": "T04",
+        "method": "text",
+        "address": "15KQZj1AU2hjT3ebZMtWqDsMv3fFxTNwpf",
+        "network": "invalid",
+        "attribution": "unsupported",
+        "sources": [
+          "T04"
+        ]
+      },
+      {
+        "message": "T05",
+        "artifact": "T05",
+        "method": "text",
+        "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+        "network": "bitcoin_test_family",
+        "attribution": "unsupported",
+        "sources": [
+          "T05"
+        ]
+      },
+      {
+        "message": "T06",
+        "artifact": "T06",
+        "method": "text",
+        "address": "midSACfDe3qAxJZZXA9gkwBZgPqJJUpy1w",
+        "network": "bitcoin_test_family",
+        "attribution": "unsupported",
+        "sources": [
+          "T06"
+        ]
+      },
+      {
+        "message": "T07",
+        "artifact": "T07",
+        "method": "text",
+        "address": "mh5CE8Nbj38iND267s4XnvhSmhDW7yWc6Q",
+        "network": "bitcoin_test_family",
+        "attribution": "unsupported",
+        "sources": [
+          "T07"
+        ]
+      }
+    ],
+    "images": [
+      {
+        "id": "IMG-SADAQAH",
+        "sha256": "938a50b162aa33cf82daf0df8dfcc31a18c1d6fd5129648960df18bf7a821bc6",
+        "qr": "",
+        "ocr": "iQ)\nWy\n4 > B, 4\n\\ SUPPORTING THE MUJAHIDIN IN SYRIA WITH\nWEAPONS, FINANCIAL AID AND OTHER qj\nPROJECTS ASSISTING THE JIHAD. WY)\nAsta cisc lulls Aatuyls Ly ger ced Gable aes\nnoms gal 9055 Al ttall Oa Uses an\n} iTgebZMtWaDsMvsiFxTNwpf\n@ 15K971AU2N)\nae A | =\u2014\n5 \u201c Our OMONER n Cryptocur \u00a900e |\n"
+      },
+      {
+        "id": "IMG-QASSAM",
+        "sha256": "7d7668262ab0b4570207f2573140b38899067fc479ecdc9cb69b3a8d964dbd22",
+        "qr": "17QAWGVpFV4gZ25NQug46e5mBho4uDP6MD",
+        "ocr": "2 a + \u00e9\n! = =, wl i ra ZB:\nUa! pod rast god Conta! (ole fio! al!\nLeake ig uilugl iis ogltall paragon Se 8 By\u2019\ny galled! poasiadl ONE ae ere aha Ln\nii ON NEG T?QAWGVpFV4gZ25NQug46e5mBho4uDP6MD 2p\nTaam aus gubult\n"
+      }
+    ],
+    "audit": {
+      "fixture_sha256": "c1dbe65fcb9802e411095d74136211f22f9a1a030b6428b908ef1526ea7f6363",
+      "register_sha256": "5217d542e7ce356512da292104dade3850b25e0c74b9e8b8715568b576a94676"
+    },
+    "osint_summary": "**Public-mention summary (reviewed October 1, 2026):** Two distinct Bitcoin mainnet addresses match entries in the DOJ\u2019s 2020 civil complaints. The complaint identifies **15K9\u2026TNwpf** as Defendant Property 79 and alleges that Al Sadaqah solicited BTC donations to it on Telegram. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf)) It identifies **17QAW\u2026P6MD** as Defendant Property 4 in a separate al-Qassam fundraising campaign; the supplied QR and human-review rows both refer to this same address and source, not two independent public mentions. ([justice.gov](https://www.justice.gov/d9/press-releases/attachments/2020/08/13/download_civil_complaints_.pdf))\n\nThese are allegations in civil complaints, not findings of fact. The supplied invalid and test-family rows are controls with unsupported attribution; they do not add public mainnet matches. This review makes no claim about address ownership, current control, or freeze status."
+  }
+}

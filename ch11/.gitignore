@@ -1,5 +1,6 @@
 .env
-output/
+output/*
+!output/gpt-6-luna-doj-telegram-training-fixture-2026-10-01.json
 output_*/
 __pycache__/
 .DS_Store

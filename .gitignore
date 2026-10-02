@@ -36,4 +36,6 @@ venv/
 **/results/
 !ch6/results/
 !ch6/results/**
+!ch11/output/
+!ch11/output/gpt-6-luna-doj-telegram-training-fixture-2026-10-01.json
 *.log

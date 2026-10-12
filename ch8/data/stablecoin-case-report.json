@@ -1,0 +1,128 @@
+{
+  "kind": "local_solidity_compiler_observations",
+  "compiler": "Version: 0.8.29+commit.ab55807c.Darwin.appleclang",
+  "inputs": {
+    "interface": "IERC20.sol",
+    "token": "BlacklistToken.sol"
+  },
+  "output": "data/stablecoin-case-report.json",
+  "input_sha256": {
+    "IERC20.sol": "13e9b3e1cf350be51850a5eaaebfc39a07d4361db3b3e28b39204f84d0e80e56",
+    "BlacklistToken.sol": "8545ce42ed26f6051d2fdd9040b3ebca8e7e11e85a2f981f6473f0dfae196a62"
+  },
+  "sources": {
+    "IERC20.sol": "// SPDX-License-Identifier: CC0-1.0\n// Cryptocurrency Investigation with Agentic AI, Victor Fang, 2026\n// Teaching contrast only: ERC-20 interface names/selectors with no deployable\n// runtime. Not imported by BlacklistToken.sol; not required to compile the token.\npragma solidity >=0.7.0 <0.9.0;\n\ninterface IERC20 {\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function transfer(address to, uint256 amount) external returns (bool);\n    function allowance(address owner, address spender)\n        external view returns (uint256);\n    function approve(address spender, uint256 amount) external returns (bool);\n    function transferFrom(address from, address to, uint256 amount)\n        external returns (bool);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n}\n",
+    "BlacklistToken.sol": "// SPDX-License-Identifier: MIT\n// Cryptocurrency Investigation with Agentic AI, Victor Fang, 2026\n// Synthetic teaching token with a sender blacklist. Not an issuer contract.\n// Standalone: does not import IERC20.sol (that file is a separate teaching contrast).\npragma solidity >=0.7.0 <0.9.0;\n\ncontract BlacklistToken {\n    address public owner = msg.sender;\n    mapping(address => uint256) public balanceOf;\n    // Offline teaching map only; this lab never populates live blacklist data.\n    mapping(address => bool) public blacklisted;\n\n    modifier onlyOwner() { require(msg.sender == owner, \"owner\"); _; }\n\n    function mint(address to, uint256 amount) external onlyOwner {\n        balanceOf[to] += amount;\n    }\n\n    function setBlacklist(address who, bool value) external onlyOwner {\n        blacklisted[who] = value;\n    }\n\n    function transfer(address to, uint256 amount) external {\n        require(!blacklisted[msg.sender], \"blacklisted\");\n        require(to != address(0), \"zero\");\n        require(balanceOf[msg.sender] >= amount, \"balance\");\n        balanceOf[msg.sender] -= amount;\n        balanceOf[to] += amount;\n    }\n}\n"
+  },
+  "interface": {
+    "contract": "IERC20",
+    "source_file": "IERC20.sol",
+    "function_signatures": {
+      "0xdd62ed3e": "allowance(address,address)",
+      "0x095ea7b3": "approve(address,uint256)",
+      "0x70a08231": "balanceOf(address)",
+      "0x18160ddd": "totalSupply()",
+      "0xa9059cbb": "transfer(address,uint256)",
+      "0x23b872dd": "transferFrom(address,address,uint256)"
+    },
+    "event_signatures": {
+      "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": "Approval(address,address,uint256)",
+      "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": "Transfer(address,address,uint256)"
+    },
+    "abi_function_count": 6,
+    "runtime_bytes": 0,
+    "runtime_sha256": null,
+    "candidate_selectors": null,
+    "scan_error": null,
+    "limit": "No runtime bytecode. Selectors are compiler ABI names only."
+  },
+  "token": {
+    "contract": "BlacklistToken",
+    "source_file": "BlacklistToken.sol",
+    "function_signatures": {
+      "0x70a08231": "balanceOf(address)",
+      "0xdbac26e9": "blacklisted(address)",
+      "0x40c10f19": "mint(address,uint256)",
+      "0x8da5cb5b": "owner()",
+      "0x153b0d1e": "setBlacklist(address,bool)",
+      "0xa9059cbb": "transfer(address,uint256)"
+    },
+    "event_signatures": {},
+    "abi_function_count": 6,
+    "runtime_bytes": 2519,
+    "runtime_sha256": "018b926aceb66be4c4886ff363bcecf4022b8aabad01be94a0ae6724135f6834",
+    "candidate_selectors": [
+      {
+        "offset": 31,
+        "selector": "0x153b0d1e",
+        "jumpdest": 100,
+        "abi_signature": "setBlacklist(address,bool)"
+      },
+      {
+        "offset": 42,
+        "selector": "0x40c10f19",
+        "jumpdest": 128,
+        "abi_signature": "mint(address,uint256)"
+      },
+      {
+        "offset": 53,
+        "selector": "0x70a08231",
+        "jumpdest": 156,
+        "abi_signature": "balanceOf(address)"
+      },
+      {
+        "offset": 64,
+        "selector": "0x8da5cb5b",
+        "jumpdest": 204,
+        "abi_signature": "owner()"
+      },
+      {
+        "offset": 75,
+        "selector": "0xa9059cbb",
+        "jumpdest": 234,
+        "abi_signature": "transfer(address,uint256)"
+      },
+      {
+        "offset": 86,
+        "selector": "0xdbac26e9",
+        "jumpdest": 262,
+        "abi_signature": "blacklisted(address)"
+      }
+    ],
+    "scan_error": null,
+    "limit": "candidate_selectors are bytecode dispatcher-pattern matches, not blacklist membership checks; not reachability or behavior."
+  },
+  "evidence_layers": {
+    "interface": {
+      "source_file": "IERC20.sol",
+      "source_sha256": "13e9b3e1cf350be51850a5eaaebfc39a07d4361db3b3e28b39204f84d0e80e56",
+      "abi_names": [
+        "allowance(address,address)",
+        "approve(address,uint256)",
+        "balanceOf(address)",
+        "totalSupply()",
+        "transfer(address,uint256)",
+        "transferFrom(address,address,uint256)"
+      ],
+      "runtime_bytes": 0,
+      "candidate_selector_count": null
+    },
+    "token": {
+      "source_file": "BlacklistToken.sol",
+      "source_sha256": "8545ce42ed26f6051d2fdd9040b3ebca8e7e11e85a2f981f6473f0dfae196a62",
+      "abi_names": [
+        "balanceOf(address)",
+        "blacklisted(address)",
+        "mint(address,uint256)",
+        "owner()",
+        "setBlacklist(address,bool)",
+        "transfer(address,uint256)"
+      ],
+      "runtime_bytes": 2519,
+      "candidate_selector_count": 6
+    }
+  },
+  "ai_status": "not run; deterministic compiler evidence only",
+  "limit": "Source text, ABI names, and runtime bytecode records are separate. candidate_selectors are dispatcher patterns, not blacklist checks. No chain state, reachability, or issuer identity.",
+  "next_check": "For a live specimen: obtain chain ID, address, and block-pinned runtime before attributing control behavior."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "unverified model interpretation",
+  "model": "gpt-6-luna",
+  "response_id": "resp_0fedd86c5a2ae2c5016acaa7189e5487d19f494e9de9f59409",
+  "input_sha256": "e71cd0ab62ced3f538b8e9f443037c9862fca749cee46e16956a74da1d15da1c",
+  "instructions_sha256": "8c1d7ea3c31933bff38771bff1101a5798aeaa81558e0528615393f27d48df02",
+  "text": "**Unverified draft for human review only.** The **interface.runtime_bytes** field is zero: IERC20 has ABI function names, but no runtime bytecode. Its **interface.function_signatures** list describes the interface; it does not show deployed behavior.\n\nThe **token.runtime_bytes** field is 2516. The **token.function_signatures** field lists six functions, while **token.candidate_selectors** records six bytecode dispatcher-pattern matches. Those matches confirm no behavior, and a missing entry would not prove a function is absent.\n\nThe **token** source is synthetic teaching code. Its **sources** field describes a sender blacklist check in transfer, but this is not execution-confirmed. The **sources** field also says the offline lab never populates the blacklisted map: this is not a blacklist \u201chit.\u201d The **ai_status** field says only deterministic compiler evidence was produced; the **limit** field notes there is no chain state or issuer identity.\n\n**next_check:** For a live specimen: obtain chain ID, address, and block-pinned runtime before attributing control behavior."
+}

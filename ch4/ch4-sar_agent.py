@@ -58,20 +58,35 @@ Part II Suspicious Activity Information, Part III Financial Institution
 Where Activity Occurred, Part IV Filing Institution Contact Information,
 Part V Narrative. Then add Evidence Gaps and a Human Review Checklist.
 Write Part V chronologically and include the full addresses and TxID.
+Copy source_address, deposit_address, and txid character for character.
+Do not insert, drop, or regroup any character in those three values.
 Cite factual statements [SYNTHETIC-1]. Keep UNKNOWN facts unresolved.
 Do not infer guilt, ransomware participation, sanctions status, or intent.
 Distinguish the confirmed deposit and sale from the held wire request.
-End with: Filing decision: UNDECIDED - AUTHORIZED HUMAN REQUIRED.
+End with this line and no extra punctuation:
+Filing decision: UNDECIDED - AUTHORIZED HUMAN REQUIRED
 """
 
 
-model = os.environ.get("OPENAI_MODEL")
-if not model or not os.environ.get("OPENAI_API_KEY"):
-    raise SystemExit("Set OPENAI_MODEL and OPENAI_API_KEY before running.")
+def model_file_tag(name: str) -> str:
+    """Short filename token: gpt-6-luna -> gpt6, gpt-5 -> gpt5."""
+    name = name.strip().lower()
+    if name.startswith("gpt-6"):
+        return "gpt6"
+    if name.startswith("gpt-5"):
+        return "gpt5"
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in name)
+    return safe or "model"
+
+
+model = os.environ.get("OPENAI_MODEL", "gpt-6-luna")
+if not os.environ.get("OPENAI_API_KEY"):
+    raise SystemExit("Set OPENAI_API_KEY before running.")
 
 
 response = OpenAI(timeout=60, max_retries=0).responses.create(
     model=model,
+    reasoning={"effort": "low"},
     instructions=INSTRUCTIONS,
     input=json.dumps(CASE, indent=2),
     store=False,
@@ -91,7 +106,7 @@ if approval != "SAVE FAKE DRAFT":
     raise SystemExit("Cancelled; nothing saved or filed.")
 
 
-output = Path("FAKE_SAR_TRAINING_DRAFT.md")
+output = Path(f"FAKE_SAR_TRAINING_DRAFT_{model_file_tag(model)}.md")
 try:
     with output.open("x", encoding="utf-8") as handle:
         handle.write(draft)

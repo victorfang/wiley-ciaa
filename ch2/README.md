@@ -35,7 +35,7 @@ export OPENAI_API_KEY=sk-...
 export OPENAI_API_KEY_VF=sk-...
 ```
 
-Optional: `OPENAI_MODEL` (default `gpt-5`).
+Optional: `OPENAI_MODEL` (default `gpt-6-luna`).
 
 ## Usage
 
@@ -79,10 +79,10 @@ python3 ch2_bitcoin_trace_agent.py --output-dir ./output --ai
 | `cache/esplora/*.json` | Raw Esplora responses (one file per API path) |
 | `output/bitcoin_trace_package_latest.json` | Full one-hop package + running tx + cache stats |
 | `output/bitcoin_trace_package_<UTC>.json` | Timestamped copy of the same package |
-| `output/openai_summary_latest.md` | Latest AI report (with `--ai`) |
-| `output/openai_summary_<UTC>.md` | Timestamped AI report |
-| `output/openai_request_latest.json` | Full OpenAI API call context (model, instructions, input, response) |
-| `output/openai_request_<UTC>.json` | Timestamped copy of the same request record |
+| `output/openai_summary_gpt6.md` | Latest AI report for the default model (with `--ai`) |
+| `output/openai_summary_<model>_<UTC>.md` | Timestamped AI report (`gpt6`, `gpt5`, …) |
+| `output/openai_request_gpt6.json` | Full OpenAI API call context (model, instructions, input, response) |
+| `output/openai_request_<model>_<UTC>.json` | Timestamped copy of the same request record |
 
 Stdout prints the package JSON, cache hit/miss counts, and (with `--ai`) the full OpenAI summary.
 

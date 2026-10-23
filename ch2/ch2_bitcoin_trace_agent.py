@@ -439,7 +439,7 @@ def inspect_running_transaction(
 def build_openai_request(package: dict[str, Any]) -> dict[str, Any]:
     """Exact kwargs sent to client.responses.create(...)."""
     return {
-        "model": os.getenv("OPENAI_MODEL", "gpt-5"),
+        "model": os.getenv("OPENAI_MODEL", "gpt-6-luna"),
         "reasoning": {"effort": "low"},
         "instructions": (
             "You are a Bitcoin forensic analyst. Use only the supplied "
@@ -498,6 +498,17 @@ def summarize_with_ai(
     return response.output_text, request_record
 
 
+def model_file_tag(model: str) -> str:
+    """Short filename token: gpt-6-luna -> gpt6, gpt-5 -> gpt5."""
+    name = model.strip().lower()
+    if name.startswith("gpt-6"):
+        return "gpt6"
+    if name.startswith("gpt-5"):
+        return "gpt5"
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in name)
+    return safe or "model"
+
+
 def parse_utc(value: str) -> int:
     timestamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if timestamp.tzinfo is None:
@@ -543,12 +554,14 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    model_name = os.getenv("OPENAI_MODEL", "gpt-6-luna")
+    tag = model_file_tag(model_name)
     package_path = output_dir / f"bitcoin_trace_package_{stamp}.json"
     package_latest = output_dir / "bitcoin_trace_package_latest.json"
-    ai_path = output_dir / f"openai_summary_{stamp}.md"
-    ai_latest = output_dir / "openai_summary_latest.md"
-    request_path = output_dir / f"openai_request_{stamp}.json"
-    request_latest = output_dir / "openai_request_latest.json"
+    ai_path = output_dir / f"openai_summary_{tag}_{stamp}.md"
+    ai_latest = output_dir / f"openai_summary_{tag}.md"
+    request_path = output_dir / f"openai_request_{tag}_{stamp}.json"
+    request_latest = output_dir / f"openai_request_{tag}.json"
 
     esplora = EsploraClient(use_cache=not args.no_cache)
     package = {

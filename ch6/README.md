@@ -7,10 +7,10 @@
 
 ## What this lab demonstrates
 
-Same model, same Bitcoin address, two answer paths:
+Same Bitcoin address, two answer paths, two models:
 
-1. **LLM only** — answers from training memory (can invent plausible but wrong numbers).
-2. **Tool-grounded + thin harness** — must call Blockstream Esplora; harness checks tool health and answer-vs-evidence match.
+1. **Weak LLM only (`gpt-5-mini`)** — answers from training memory (can invent plausible but wrong numbers).
+2. **Tool-grounded `gpt-6-luna` + thin harness** — must call Blockstream Esplora; harness checks tool health and answer-vs-evidence match.
 
 This chapter introduces **three stages of agentic AI engineering** (prompt, context, harness). Document retrieval (RAG) is deferred to a later chapter.
 
@@ -47,7 +47,7 @@ Prompts alone are not enough. A thin **harness** wraps the model so the investig
 | Tool returns `ok: false` on network/HTTP errors | Inventing numbers when Esplora is down |
 | Abstain if tool failed (no second LLM invent step) | Unsupported conclusions after silent tool failure |
 | `assert_answer_matches_evidence` | Prose that drifts from tool BTC / tx count |
-| Saved `{model}_{address6}_{time}` artifacts | Missing audit trail (model, address, timestamp, evidence) |
+| Saved `{weak}_vs_{model}_{address6}_{time}` artifacts | Missing audit trail (both models, address, timestamp, evidence) |
 
 This is educational and intentionally short — not a full production agent platform.
 
@@ -166,56 +166,59 @@ For crypto investigations, treat LLM prose as a **draft** until each numeric/att
 
 ## Side-by-side results (recorded run)
 
-Captured **2026-09-10T20:22:00Z** with **`gpt-4o-mini`**. Full artifacts:
+Captured **2026-10-23T03:47:50Z**. Path A is **`gpt-5-mini`** with no tool. Path B is **`gpt-6-luna`** with Esplora and the harness. Full artifacts:
 
-- [`results/gpt-4o-mini_1A1zP1_20260910T202204Z.json`](results/gpt-4o-mini_1A1zP1_20260910T202204Z.json)
-- [`results/gpt-4o-mini_1A1zP1_20260910T202204Z.txt`](results/gpt-4o-mini_1A1zP1_20260910T202204Z.txt)
+- [`results/gpt-5-mini_vs_gpt-6-luna_1A1zP1_20261023T034802Z.json`](results/gpt-5-mini_vs_gpt-6-luna_1A1zP1_20261023T034802Z.json)
+- [`results/gpt-5-mini_vs_gpt-6-luna_1A1zP1_20261023T034802Z.txt`](results/gpt-5-mini_vs_gpt-6-luna_1A1zP1_20261023T034802Z.txt)
 
-| Metric | A. LLM only (hallucinated) | B. Tool-grounded (Esplora) |
-|--------|----------------------------|----------------------------|
-| Confirmed tx count | **1** | **65,746** |
-| Confirmed received | **50 BTC** | **57.43423379 BTC** |
+| Metric | A. `gpt-5-mini` only (hallucinated) | B. `gpt-6-luna` + Esplora |
+|--------|--------------------------------------|---------------------------|
+| Confirmed tx count | **1** | **67,099** |
+| Confirmed received | **50 BTC** | **57.6863958 BTC** |
 | Confirmed spent | **0 BTC** | **0 BTC** |
-| Confirmed balance | **50 BTC** | **57.43423379 BTC** |
+| Confirmed balance | **50 BTC** | **57.6863958 BTC** |
 | Evidence | none | Blockstream API + SHA-256 of raw JSON |
+| Harness | — | tool ok, answer matched evidence |
 
-Path A recycled the coinbase myth. Path B matched the live explorer response.
+`gpt-5-mini` recycled the coinbase myth. `gpt-6-luna` beat that answer by calling the chain tool; the harness accepted the prose only because the transaction count and balance were copied from the tool JSON.
 
 **Taxonomy label for Path A:** factuality / fact-conflicting hallucination (outdated parametric “fact”), induced by a no-tool, no-abstention prompt.
 
-### Do newer models fix this? (GPT-5 comparison)
+### Earlier memory-only runs (kept)
 
-Same address, same Path A prompt, live API runs. **No — GPT-5 still hallucinates without tools**; it just invents different wrong numbers. Tool grounding still recovers the live Esplora truth.
+These files stay under the model id they were run with. They are the same address and the same Path A prompt, on earlier dates. The Esplora row is the tool result saved in that same run, not today’s balance.
 
 | Model (Path A) | Confirmed txs | Received / balance | Still wrong? | Artifact |
 |----------------|---------------|--------------------|--------------|----------|
 | `gpt-4o-mini` | 1 | 50 BTC | yes (classic myth) | [`gpt-4o-mini_1A1zP1_…`](results/gpt-4o-mini_1A1zP1_20260910T202204Z.json) |
 | `gpt-5-mini` | 1 | 50 BTC | yes (same myth) | [`gpt-5-mini_1A1zP1_…`](results/gpt-5-mini_1A1zP1_20260910T210304Z.json) |
 | `gpt-5` | 3,769 | 68.561 BTC | yes (different fabrication) | [`gpt-5_1A1zP1_…`](results/gpt-5_1A1zP1_20260910T210246Z.json) |
-| Ground truth (Esplora, Path B) | **65,746** | **57.43423379 BTC** | — | same runs |
+| `gpt-4.1-mini` | 305 | 68,012.5 received / 12.51 balance | yes | [`gpt-4.1-mini_1A1zP1_…`](results/gpt-4.1-mini_1A1zP1_20260915T041617Z.json) |
+| Esplora on 2026-09-10 | **65,746** | **57.43423379 BTC** | — | the `gpt-4o-mini` / `gpt-5` / `gpt-5-mini` runs |
+| Esplora on 2026-09-15 | **65,793** | **57.46952256 BTC** | — | the `gpt-4.1-mini` run |
 
-Takeaway: scaling / newer chat models can reduce *some* refusal failures, but they do **not** replace live chain access. Without tools, Path A remains unsafe for investigative numbers.
+`gpt-5-mini` remains the weak-model example: with no tool, it still reports 1 transaction and 50 BTC. On 2026-09-10, `gpt-5` with no tool invented a different wrong balance. The 2026-10-23 win is `gpt-6-luna` with the tool and the harness.
 
-### A. Hallucinated answer (verbatim)
+### A. Hallucinated answer (`gpt-5-mini`, verbatim)
 
 ```text
 1. Confirmed transaction count: 1
-2. Total confirmed BTC received: 50 BTC
-3. Total confirmed BTC spent: 0 BTC
-4. Current confirmed BTC balance: 50 BTC
+2. Total confirmed BTC received: 50.00000000 BTC
+3. Total confirmed BTC spent: 0.00000000 BTC
+4. Current confirmed BTC balance: 50.00000000 BTC
 ```
 
-### B. Tool-grounded answer (verbatim)
+### B. Tool-grounded answer (`gpt-6-luna`, verbatim)
 
 ```text
-- Confirmed Transaction Count: 65,746
-- Confirmed Received: 57.43423379 BTC
-- Confirmed Spent: 0.0 BTC
-- Confirmed Balance: 57.43423379 BTC
+- Confirmed transaction count: 67099
+- Confirmed received: 57.6863958 BTC
+- Confirmed spent: 0.0 BTC
+- Confirmed balance: 57.6863958 BTC
 
-- Source URL: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-- Retrieval Time: 2026-09-10T20:22:03.340832+00:00
-- Raw Response SHA-256: 34f7cc200c1153e5b31a61ddf5632ff87629987858fd9831f9cf6db3b0740038
+Source: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+Retrieved: 2026-10-23T03:48:00.101769+00:00 (UTC)
+Raw-response SHA-256: 3c1aa0e0f9234012165f719851b27ccfb679f5c86b81dff8fb35550b98acbf9c
 ```
 
 ## How the two prompts differ
@@ -243,7 +246,7 @@ The model **must** call `get_bitcoin_address_summary` (Blockstream Esplora) befo
 
 (Document retrieval / RAG is intentionally out of scope here.)
 
-Stronger models may refuse Path A and ask for a lookup. Weaker or older models (here `gpt-4o-mini`) often invent figures — which makes the educational contrast clear. Override with `OPENAI_MODEL` if your API project exposes other models.
+Path A is pinned to `gpt-5-mini` so the lab still shows a fluent wrong answer. Path B is `gpt-6-luna`. Override with `OPENAI_WEAK_MODEL` and `OPENAI_MODEL` if your API project uses other ids.
 
 ## Run the demo
 
@@ -251,18 +254,23 @@ Stronger models may refuse Path A and ask for a lookup. Weaker or older models (
 cp .env.example .env   # set OPENAI_API_KEY (or OPENAI_API_KEY_VF)
 pip install -r requirements.txt
 
-# optional: change model (default gpt-4o-mini)
-# export OPENAI_MODEL=gpt-4o-mini
+# optional: Path A weak model (default gpt-5-mini), Path B (default gpt-6-luna)
+# export OPENAI_WEAK_MODEL=gpt-5-mini
+# export OPENAI_MODEL=gpt-6-luna
 
 python3 ch6-hallucination-demo.py
 ```
 
-Each run writes a pair under `results/` named `{model}_{address6}_{YYYYMMDDTHHMMSSZ}`:
+Each run writes a new pair under `results/`. The name includes both model ids, so a later run does not overwrite an earlier one:
 
-- `*.json` — model, address, timestamp, both answers, evidence
+`{weak-model}_vs_{model}_{address6}_{YYYYMMDDTHHMMSSZ}`
+
+- `*.json` — both models, address, timestamp, both answers, evidence
 - `*.txt` — same content in a readable report
 
-Example: `gpt-4o-mini_1A1zP1_20260910T202204Z.json`
+Example: `gpt-5-mini_vs_gpt-6-luna_1A1zP1_20261023T034802Z.json`
+
+Older single-model files (`gpt-4o-mini_…`, `gpt-5-mini_…`, `gpt-5_…`, `gpt-4.1-mini_…`) stay in `results/` under the model that produced them.
 
 Live chain stats change over time; re-run to refresh Path B. Path A may still hallucinate the same outdated genesis story.
 

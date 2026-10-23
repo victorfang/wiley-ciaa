@@ -3,7 +3,7 @@ from __future__ import annotations
 """Chapter 6 — Reliable LLMs for Evidence-Based Investigations.
 
 Cryptocurrency Investigation with Agentic AI · Victor Fang · Wiley · 2026
-Compare LLM-only (hallucination-prone) vs tool-grounded Bitcoin address stats.
+Weak memory-only answer (gpt-5-mini) vs tool-grounded gpt-6-luna.
 """
 
 from datetime import datetime, timezone
@@ -17,26 +17,74 @@ import requests
 from openai import OpenAI
 
 
-# Prefer a weaker/older chat model so path A invents plausible but wrong
-# live stats. Override with OPENAI_MODEL if needed (e.g. gpt-5).
-MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ESPLORA_BASE_URL = "https://blockstream.info/api"
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
+CHAPTER_DIR = Path(__file__).resolve().parent
 
+
+def load_local_env() -> None:
+    """Load ch6/.env, then the repo .env. A variable already set in the shell wins."""
+    for path in (CHAPTER_DIR / ".env", CHAPTER_DIR.parent / ".env"):
+        if not path.is_file():
+            continue
+        for raw in path.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+
+load_local_env()
 if not os.getenv("OPENAI_API_KEY") and os.getenv("OPENAI_API_KEY_VF"):
     os.environ["OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY_VF"]
 
-client = OpenAI()
+# Path A stays on a smaller model so the no-tool answer can invent live stats.
+# Path B is gpt-6-luna: it must call Esplora, then the harness checks the prose.
+WEAK_MODEL = os.getenv("OPENAI_WEAK_MODEL", "gpt-5-mini")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-6-luna")
+
+client = OpenAI(timeout=120)
 
 
-def chat_create_kwargs(**kwargs):
-    """gpt-5* chat models reject non-default temperature; omit it for them."""
-    if MODEL.startswith("gpt-5"):
+def completion_kwargs(chat_model: str, **kwargs):
+    """Adapt chat-completions params to the model family.
+
+    gpt-5* and gpt-6* reject a non-default temperature. gpt-6-luna also
+    rejects function tools on this endpoint when reasoning is enabled.
+    """
+    if chat_model.startswith(("gpt-5", "gpt-6")):
         kwargs.pop("temperature", None)
+    if chat_model.startswith("gpt-6"):
+        kwargs.setdefault("max_completion_tokens", 1200)
+        if kwargs.get("tools") is not None:
+            kwargs["reasoning_effort"] = "none"
+    kwargs["model"] = chat_model
     return kwargs
 
 
-def llm_only(address: str) -> dict:
+def as_assistant_message(message) -> dict:
+    """Copy an assistant turn into a plain message the next call can replay."""
+    payload = {"role": "assistant", "content": message.content}
+    if message.tool_calls:
+        payload["tool_calls"] = [
+            {
+                "id": call.id,
+                "type": "function",
+                "function": {
+                    "name": call.function.name,
+                    "arguments": call.function.arguments,
+                },
+            }
+            for call in message.tool_calls
+        ]
+    return payload
+
+
+def llm_only(address: str, model: str) -> dict:
     """Unsafe path: answer from parametric memory only (no chain evidence)."""
     question = f"""
 You are a blockchain analyst. Answer from your own knowledge only.
@@ -51,8 +99,8 @@ Give concrete numbers for Bitcoin address {address}:
 Reply in a short factual report with the four numbers.
 """
     response = client.chat.completions.create(
-        **chat_create_kwargs(
-            model=MODEL,
+        **completion_kwargs(
+            model,
             messages=[{"role": "user", "content": question}],
             temperature=0.7,
         )
@@ -172,7 +220,7 @@ BITCOIN_TOOLS = [
 ]
 
 
-def tool_grounded_agent(address: str) -> dict:
+def tool_grounded_agent(address: str, model: str) -> dict:
     """Minimal agent loop with a thin harness around the tool call."""
     question = (
         f"Investigate Bitcoin address {address}. Report confirmed transaction "
@@ -193,13 +241,18 @@ def tool_grounded_agent(address: str) -> dict:
 
     # Harness: force a tool call on the first turn.
     first_response = client.chat.completions.create(
-        model=MODEL,
-        messages=messages,
-        tools=BITCOIN_TOOLS,
-        tool_choice="required",
+        **completion_kwargs(
+            model,
+            messages=messages,
+            tools=BITCOIN_TOOLS,
+            tool_choice="required",
+            max_completion_tokens=800,
+        )
     )
     first_message = first_response.choices[0].message
-    messages.append(first_message)
+    if first_response.choices[0].finish_reason == "length":
+        raise RuntimeError("Tool-call turn hit the token limit before naming a tool.")
+    messages.append(as_assistant_message(first_message))
 
     evidence_records = []
     tool_calls = first_message.tool_calls or []
@@ -240,23 +293,27 @@ def tool_grounded_agent(address: str) -> dict:
         }
 
     final_response = client.chat.completions.create(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Answer only from the Bitcoin tool output. Prefer the "
-                    "confirmed_*_btc fields already provided by the tool; do not "
-                    "recompute or invent amounts. State the source URL, retrieval "
-                    "time, and raw-response SHA-256. If evidence is missing, "
-                    "abstain. Do not add identity, ownership, risk, or exchange "
-                    "claims."
-                ),
-            },
-            *messages[1:],
-        ],
-        tools=BITCOIN_TOOLS,
-        tool_choice="none",
+        **completion_kwargs(
+            model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Answer only from the Bitcoin tool output. Prefer the "
+                        "confirmed_*_btc fields already provided by the tool; do not "
+                        "recompute or invent amounts. Copy confirmed_tx_count and "
+                        "confirmed_balance_btc exactly. State the source URL, retrieval "
+                        "time, and raw-response SHA-256. If evidence is missing, "
+                        "abstain. Do not add identity, ownership, risk, or exchange "
+                        "claims."
+                    ),
+                },
+                *messages[1:],
+            ],
+            tools=BITCOIN_TOOLS,
+            tool_choice="none",
+            max_completion_tokens=1200,
+        )
     )
     final_message = final_response.choices[0].message
     if final_message.tool_calls:
@@ -279,9 +336,10 @@ def save_run_artifacts(run: dict) -> Path:
     """Write JSON + readable text artifacts for one comparison run."""
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    safe_model = MODEL.replace("/", "-")
+    safe_weak = run["weak_model"].replace("/", "-")
+    safe_model = run["model"].replace("/", "-")
     safe_address = run["address"][:6]
-    stem = f"{safe_model}_{safe_address}_{stamp}"
+    stem = f"{safe_weak}_vs_{safe_model}_{safe_address}_{stamp}"
 
     json_path = RESULTS_DIR / f"{stem}.json"
     txt_path = RESULTS_DIR / f"{stem}.txt"
@@ -294,14 +352,15 @@ def save_run_artifacts(run: dict) -> Path:
             [
                 "Chapter 6 — Reliable LLMs for Evidence-Based Investigations",
                 f"timestamp_utc: {run['timestamp_utc']}",
+                f"weak_model: {run['weak_model']}",
                 f"model: {run['model']}",
                 f"address: {run['address']}",
                 f"lesson: {run['lesson']}",
                 "",
-                "=== A. LLM ONLY (no blockchain evidence) ===",
+                "=== A. WEAK LLM ONLY (no blockchain evidence) ===",
                 run["paths"]["llm_only"]["answer"],
                 "",
-                "=== B. TOOL-GROUNDED BITCOIN AGENT ===",
+                "=== B. TOOL-GROUNDED GPT-6 AGENT ===",
                 run["paths"]["tool_grounded"]["answer"],
                 "",
                 "=== Evidence record ===",
@@ -317,17 +376,18 @@ def save_run_artifacts(run: dict) -> Path:
 def compare_paths(address: str) -> Path:
     timestamp_utc = datetime.now(timezone.utc).isoformat()
 
-    print(f"Model: {MODEL}")
+    print(f"Weak model (path A): {WEAK_MODEL}")
+    print(f"Tool-grounded model (path B): {MODEL}")
     print(f"Address: {address}")
     print(f"Timestamp (UTC): {timestamp_utc}")
     print()
 
-    print("=== A. LLM ONLY: NO BLOCKCHAIN EVIDENCE ===")
-    llm_result = llm_only(address)
+    print("=== A. WEAK LLM ONLY: NO BLOCKCHAIN EVIDENCE ===")
+    llm_result = llm_only(address, WEAK_MODEL)
     print(llm_result["answer"])
 
-    print("\n=== B. TOOL-GROUNDED BITCOIN AGENT ===")
-    grounded = tool_grounded_agent(address)
+    print("\n=== B. TOOL-GROUNDED GPT-6 AGENT ===")
+    grounded = tool_grounded_agent(address, MODEL)
     print(grounded["answer"])
     print("\nEvidence record:")
     print(json.dumps(grounded["evidence"], indent=2))
@@ -335,15 +395,17 @@ def compare_paths(address: str) -> Path:
 
     run = {
         "lesson": (
-            "Unverified LLM answers can hallucinate live on-chain statistics; "
-            "tool grounding plus a thin harness constrains answers to evidence."
+            "A smaller model with no chain tool can invent live Bitcoin stats. "
+            "gpt-6-luna beats that answer only when a tool and harness force "
+            "the prose to match Esplora evidence."
         ),
         "timestamp_utc": timestamp_utc,
+        "weak_model": WEAK_MODEL,
         "model": MODEL,
         "address": address,
         "paths": {
             "llm_only": {
-                "description": "Parametric memory only; no chain tool.",
+                "description": "Weak model, parametric memory only; no chain tool.",
                 "model": llm_result["model"],
                 "response_id": llm_result["response_id"],
                 "answer": llm_result["answer"],
@@ -368,5 +430,7 @@ def compare_paths(address: str) -> Path:
 
 
 if __name__ == "__main__":
+    if not os.getenv("OPENAI_API_KEY"):
+        raise SystemExit("Set OPENAI_API_KEY in ch6/.env or the environment.")
     # Bitcoin genesis-block reward address; live statistics may change.
     compare_paths("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")

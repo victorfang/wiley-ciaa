@@ -1,0 +1,47 @@
+Chapter 6 — Reliable LLMs for Evidence-Based Investigations
+timestamp_utc: 2026-10-23T03:47:50.599538+00:00
+weak_model: gpt-5-mini
+model: gpt-6-luna
+address: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+lesson: A smaller model with no chain tool can invent live Bitcoin stats. gpt-6-luna beats that answer only when a tool and harness force the prose to match Esplora evidence.
+
+=== A. WEAK LLM ONLY (no blockchain evidence) ===
+Short factual report for Bitcoin address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+
+1. Confirmed transaction count: 1
+2. Total confirmed BTC received: 50.00000000 BTC
+3. Total confirmed BTC spent: 0.00000000 BTC
+4. Current confirmed BTC balance: 50.00000000 BTC
+
+=== B. TOOL-GROUNDED GPT-6 AGENT ===
+For Bitcoin address `1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa`:
+
+- **Confirmed transaction count:** 67099
+- **Confirmed received:** 57.6863958 BTC
+- **Confirmed spent:** 0.0 BTC
+- **Confirmed balance:** 57.6863958 BTC
+
+Source: https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa  
+Retrieved: 2026-10-23T03:48:00.101769+00:00 (UTC)  
+Raw-response SHA-256: `3c1aa0e0f9234012165f719851b27ccfb679f5c86b81dff8fb35550b98acbf9c`
+
+=== Evidence record ===
+[
+  {
+    "ok": true,
+    "network": "bitcoin-mainnet",
+    "address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "confirmed_tx_count": 67099,
+    "confirmed_received_sats": 5768639580,
+    "confirmed_spent_sats": 0,
+    "confirmed_balance_sats": 5768639580,
+    "confirmed_received_btc": 57.6863958,
+    "confirmed_spent_btc": 0.0,
+    "confirmed_balance_btc": 57.6863958,
+    "mempool_tx_count": 1,
+    "unconfirmed_balance_delta_sats": 3672,
+    "source_url": "https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "retrieved_at_utc": "2026-10-23T03:48:00.101769+00:00",
+    "raw_response_sha256": "3c1aa0e0f9234012165f719851b27ccfb679f5c86b81dff8fb35550b98acbf9c"
+  }
+]

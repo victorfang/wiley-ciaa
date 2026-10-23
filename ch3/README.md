@@ -28,7 +28,11 @@ Bitcoin stores every movement in inputs and outputs. Ethereum splits the story a
 | `ch3_eth_trace_agent.py` | Package builder + optional OpenAI investigative summary |
 | `test_ch3_eth_tracing.py` | Runs both examples live, asserts expected counts/amounts, saves results |
 | `requirements.txt` | `requests`, `openai` (latter for `--ai`) |
-| `tracing_summary_latest.md` | Sample AI / tracing artifact |
+| `tracing_summary_latest.md` | Earlier address one-hop sample (kept) |
+| `tracing_summary_gpt5.md` | GPT-5 summary of the Forsage transaction decode |
+| `openai_request_gpt5.json` | GPT-5 request and response for that summary |
+| `tracing_summary_gpt6.md` | GPT-6-Luna summary of the same transaction |
+| `openai_request_gpt6.json` | GPT-6-Luna request and response for that summary |
 | `.env.example` | Optional API key template |
 | `results/` | Saved JSON and text reports when tests are run (`latest.json`, `latest.txt`, timestamped copies) |
 
@@ -54,7 +58,7 @@ Optional — run tests and save output:
 python3 test_ch3_eth_tracing.py
 ```
 
-Optional — package builder / AI summary:
+Optional — package builder / AI summary. The default model is `gpt-6-luna` (`OPENAI_MODEL` to override). `--ai` writes `output/tracing_summary_<model>.md` and `output/openai_request_<model>.json` (`gpt6`, `gpt5`, …), plus timestamped copies. Retained Forsage summaries for both models are in this folder. The `gpt-5` files are left in place.
 
 ```bash
 python3 ch3_eth_trace_agent.py

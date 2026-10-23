@@ -112,7 +112,7 @@ def build_openai_request(package: dict[str, Any]) -> dict[str, Any]:
         )
 
     return {
-        "model": os.getenv("OPENAI_MODEL", "gpt-5"),
+        "model": os.getenv("OPENAI_MODEL", "gpt-6-luna"),
         "reasoning": {"effort": "low"},
         "instructions": (
             "You are an Ethereum forensic analyst writing a tracing results "
@@ -160,6 +160,17 @@ def summarize_with_ai(
     return response.output_text, request_record
 
 
+def model_file_tag(model: str) -> str:
+    """Short filename token: gpt-6-luna -> gpt6, gpt-5 -> gpt5."""
+    name = model.strip().lower()
+    if name.startswith("gpt-6"):
+        return "gpt6"
+    if name.startswith("gpt-5"):
+        return "gpt5"
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in name)
+    return safe or "model"
+
+
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
@@ -202,12 +213,14 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    model_name = os.getenv("OPENAI_MODEL", "gpt-6-luna")
+    tag = model_file_tag(model_name)
     package_path = output_dir / f"eth_trace_package_{stamp}.json"
     package_latest = output_dir / "eth_trace_package_latest.json"
-    summary_path = output_dir / f"tracing_summary_{stamp}.md"
-    summary_latest = output_dir / "tracing_summary_latest.md"
-    request_path = output_dir / f"openai_request_{stamp}.json"
-    request_latest = output_dir / "openai_request_latest.json"
+    summary_path = output_dir / f"tracing_summary_{tag}_{stamp}.md"
+    summary_latest = output_dir / f"tracing_summary_{tag}.md"
+    request_path = output_dir / f"openai_request_{tag}_{stamp}.json"
+    request_latest = output_dir / f"openai_request_{tag}.json"
 
     eth = EthClient(use_cache=not args.no_cache)
     if args.address:

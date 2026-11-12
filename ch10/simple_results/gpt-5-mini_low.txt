@@ -1,0 +1,50 @@
+model: gpt-5-mini
+reasoning_effort: low
+reasoning_tokens: 192
+
+Summary conclusion
+- The true Wormhole destination is destination candidate #1 (BSC tx 0x2d30...3693). It matches the VAA ID, the timing and the asset flow. The other two candidates are distractors and can be excluded for explicit, verifiable reasons below.
+
+Evidence and logical matching
+
+1) Exact VAA ID match (cryptographic identifier)
+- Source message VAA ID: 
+  2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+  - Components: wormhole_chain_id 2 (Ethereum), emitter_address 0x3ee18b2214aff97... (token bridge contract), sequence 426560.
+- Candidate #1 VAA ID: exactly the same string (2/.../426560).
+  => Direct cryptographic identifier match. This is the primary, authoritative linking token for Wormhole transfers.
+- Candidate #2 VAA ID: sequence 426559 (one less) — does NOT match.
+- Candidate #3 VAA ID: sequence 426561 (one greater) — does NOT match.
+
+Because Wormhole VAAs are uniquely identified by the triple (emitter_chain/emitter_address/sequence), only candidate #1 has the identical VAA ID and so is the only one cryptographically attributable to this source VAA.
+
+2) Recipient/address matching (application payload)
+- Source/application payload recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299.
+- Candidate #1 recipient: same address 0x48df9e8deae...
+  => Recipient address matches the payload recipient embedded in the VAA.
+- Candidate #2 recipient: same address as well, but because its VAA ID differs, that matching address is coincidental or from a different transfer.
+- Candidate #3 recipient: 0x9999... — does not match the VAA payload recipient.
+
+3) Timing and sequence consistency
+- Source on Ethereum timestamp: 2024-12-11T19:27:11Z.
+- Candidate #1 BSC timestamp: 2024-12-11T19:41:28Z (≈14 minutes later).
+  => Reasonable delay to publish and observe the VAA on destination chain, and consistent with typical Wormhole relayer/guardian to destination processing time.
+- Candidate #2 timestamp: 2024-12-11T19:35:10Z (≈8 minutes after source) but has sequence 426559 — its earlier timestamp with a different sequence indicates it is a separate transfer than the source message.
+- Candidate #3 timestamp: 2024-12-11T19:42:01Z (≈15 minutes later) but sequence 426561 indicates a different VAA (subsequent transfer). Its timestamp being near candidate #1 does not override the VAA mismatch.
+
+4) Asset amount and decimals
+- Source amount: "550", raw_amount "550000000", decimals 6 → USDT 550.000000.
+- Candidate #1 amount: "550" → exact match.
+- Candidate #2 amount: "550" → amount matches but VAA mismatch invalidates attribution.
+- Candidate #3 amount: "549.8" → amount differs (minor change) and recipient differs; plus VAA mismatch.
+
+5) Status and coherence
+- Candidate #1 status: completed — consistent with a successful redeem/mint on BSC for the given VAA.
+- Candidate #2 and #3 are also marked completed, but as shown above, their VAA identifiers and payload/recipient/amount differences show they correspond to distinct transfers.
+
+Why the distractors are incorrect (concise)
+- Candidate #2: Wrong VAA sequence (426559 vs 426560). A one-sequence difference means a different VAA emitted by the same emitter; it cannot be the destination of the source VAA. The same recipient and amount are coincidental/repeated but do not override the cryptographic VAA mismatch.
+- Candidate #3: Wrong VAA sequence (426561) and wrong recipient and amount. All three mismatches confirm it is a separate transfer.
+
+Final attribution statement
+- The source Ethereum Wormhole transfer (VAA 2/.../426560, sequence 426560) was redeemed/minted on BSC as candidate #1 (tx 0x2d30d5cbb03e38...a33693 at 2024-12-11T19:41:28Z) to recipient 0x48df9e8d... and for USDT 550. Candidate #1 is the only destination that cryptographically and temporally matches the source VAA; candidates #2 and #3 are distinct, unrelated VAAs and therefore distractors.

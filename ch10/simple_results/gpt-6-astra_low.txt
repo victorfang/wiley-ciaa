@@ -1,0 +1,105 @@
+model: gpt-6-astra
+reasoning_effort: low
+reasoning_tokens: 0
+
+## Conclusion
+
+**Candidate 1 is the unique matching BSC destination in the supplied JSON:**
+
+`0x2d30d5cbb03e38fdadddfabc5af9cbcabf29531873ebf2ff461f76eba6a33693`
+
+It matches the source message’s **complete VAA ID**, destination chain, intended recipient, and reported asset amount, with a completion time after the Ethereum transaction.
+
+**Verification scope:** This definitively isolates the matching record among these candidates. It is not independent on-chain or cryptographic verification: the JSON does not include signed VAA bytes, guardian public keys, transaction receipts, or destination token-transfer logs.
+
+## 1. Exact VAA identifier match
+
+Wormhole identifies a message by:
+
+`emitter_chain / emitter_address / sequence`
+
+The source message identifier is:
+
+```text
+2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+```
+
+Its components are internally consistent:
+
+- **Emitter chain `2`:** Ethereum, matching the source.
+- **Emitter address:** the 32-byte, zero-padded form of the source Wormhole token bridge, `0x3ee18b2214aff97000d974cf647e7c347e8fa585`.
+- **Sequence `426560`:** the specific message emitted by that bridge.
+
+| Candidate | Emitter chain/address | Sequence | Full VAA ID match |
+|---|---|---:|---|
+| 1 — `0x2d30…3693` | Exact match | `426560` | **Yes** |
+| 2 — `0x1111…1111` | Exact match | `426559` | **No** |
+| 3 — `0x2222…2222` | Exact match | `426561` | **No** |
+
+**Candidate 1 alone references the same Wormhole message.** Adjacent sequences identify different messages, even when the emitter, amount, or recipient happens to match.
+
+Strictly, the VAA ID is a **message identifier**, not itself a cryptographic hash or signature proof. The reported guardian set index `4` and signature count `13` do not permit signature verification without the actual signed VAA and guardian-set data.
+
+## 2. Timing sequence
+
+Source Ethereum transaction: **2024-12-11 19:27:11 UTC**.
+
+| Candidate | BSC timestamp | Elapsed since source | Interpretation |
+|---|---|---:|---|
+| 1 | 19:41:28 UTC | **14m 17s** | Consistent with subsequent redemption/completion |
+| 2 | 19:35:10 UTC | 7m 59s | Chronologically possible, but wrong message |
+| 3 | 19:42:01 UTC | 14m 50s | Chronologically possible, but wrong message |
+
+All candidates occur after the source, so **timing alone cannot discriminate them**. Candidate 1 satisfies the necessary ordering. Candidate 2’s earlier completion and Candidate 3’s temporal proximity do not override their VAA mismatches. Destination redemption order need not follow emitter sequence order.
+
+## 3. Asset flow and recipient alignment
+
+The source amount is internally consistent:
+
+```text
+550000000 raw units ÷ 10^6 = 550 USDT
+```
+
+The expected logical route is:
+
+```text
+Ethereum sender: 0x48df…9299
+  → application router: 0x4db1…d06e
+  → Ethereum Wormhole token bridge: 0x3ee1…a585
+  → Wormhole message sequence 426560
+  → BSC, Wormhole chain ID 4
+  → target application: 0xf352…90f2
+  → application-payload recipient: 0x48df…9299
+```
+
+The payload type `3` denotes a transfer with an application payload. Accordingly, the **target application** and the **ultimate recipient in the application payload** are distinct roles; their different addresses are not a mismatch.
+
+Candidate 1 matches:
+
+- **Destination:** BSC, Wormhole chain ID `4`.
+- **Recipient:** `0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299`, exactly matching the application-payload recipient.
+- **Reported asset:** USDT.
+- **Reported amount:** `550`, matching the source amount.
+- **Status:** `completed`.
+
+The destination records omit token contract addresses and execution logs. Thus, the JSON supports **reported asset-flow consistency**, but does not independently establish the destination token’s provenance, any application conversion, or actual execution through the target application.
+
+## 4. Why the distractors fail
+
+**Candidate 2 — `0x1111…1111`**
+
+- Matches recipient, reported asset, amount, and destination chain.
+- Occurs after the source.
+- **Fails the decisive identifier check:** sequence `426559` is not `426560`.
+
+This is a look-alike transfer associated with a different message. Matching economic details cannot establish attribution when the VAA ID differs.
+
+**Candidate 3 — `0x2222…2222`**
+
+- **Wrong VAA sequence:** `426561`, not `426560`.
+- **Wrong recipient:** `0x9999…9999`, not the intended `0x48df…9299`.
+- **Different amount:** `549.8`, rather than `550` USDT—a shortfall of `0.2` USDT.
+
+A fee could hypothetically explain an amount difference in some application flows, but no such fee is documented here, and it would not resolve the wrong VAA ID or recipient.
+
+**Final attribution:** Within the supplied dataset, Ethereum transaction `0xd5edc47aa6401ab6ed4d9c8c1d640103e81ab0176a28dd5471f62b9987156d40` links uniquely to **Candidate 1**, via the exact VAA ID ending in **`/426560`**.

@@ -1,0 +1,19 @@
+model: gpt-6-luna
+reasoning_effort: low
+reasoning_tokens: 124
+
+**The true destination is the first BSC candidate**, transaction `0x2d30d5cbb03e38fdadddfabc5af9cbcabf29531873ebf2ff461f76eba6a33693`.
+
+It matches the source on the decisive identifiers and transfer details:
+
+- **VAA ID:** The source VAA ID is `2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560`. Candidate 1 has that exact ID: same emitter chain (`2`), emitter address, and sequence (`426560`).
+- **Destination chain:** The message targets Wormhole chain ID `4`, matching BSC’s chain ID in candidate 1.
+- **Recipient and asset flow:** The message recipient is `0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299`. Candidate 1 names that recipient and reports **550 USDT**, matching the source’s 550 USDT transfer (raw amount `550000000` at 6 decimals).
+- **Timing:** Candidate 1 occurs at `19:41:28Z`, after the source at `19:27:11Z`, consistent with a destination execution following the source transfer.
+
+**Why the other candidates are not the match:**
+
+- **Candidate 2** is earlier (`19:35:10Z`) and has sequence `426559`, not `426560`. Its recipient and amount happen to match, but its VAA ID identifies a different message.
+- **Candidate 3** has sequence `426561`, not `426560`; it also names a different recipient and reports 549.8 USDT rather than 550. Its later timestamp does not overcome those mismatches.
+
+Thus, among the supplied candidates, only candidate 1 matches the source message’s exact VAA ID, destination chain, recipient, and asset amount.

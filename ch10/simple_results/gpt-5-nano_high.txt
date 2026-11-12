@@ -1,0 +1,75 @@
+model: gpt-5-nano
+reasoning_effort: high
+reasoning_tokens: 8000
+
+Bottom line
+- True destination: Destination Candidate 1 (the BSC recipient 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299) with VAA ID 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560. This aligns on all three axes: VAA ID, timing, and asset flow.
+- Distractors 2 and 3 are incorrect because they fail one or more of: matching VAA ID, matching recipient per the VAA, or exact asset flow (amount and recipient) expected by the VAA.
+
+Detailed logical match
+
+1) Cryptographic identifier (VAA ID)
+- Source VAA in the Ethereum-to-Wormhole transfer:
+  - vaa_id: 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+- Destination candidates’ VAA IDs:
+  - Candidate 1 (BSC): vaa_id = 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+  - Candidate 2 (BSC): vaa_id = 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426559
+  - Candidate 3 (BSC): vaa_id = 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426561
+- Assessment:
+  - Only Candidate 1 has the exact same VAA ID as the source message. Candidates 2 and 3 have the adjacent sequences 426559 and 426561, which do not match the source VAA’s 426560. This is a decisive discriminator because Wormhole uses strict per-sequence VAA IDs for finalizing delivery.
+  - Therefore, Candidate 1 is the only option consistent with the source VAA.
+
+2) Timing sequences
+- Source event timing: 2024-12-11T19:27:11Z (Ethereum side)
+- Destination candidates’ timings:
+  - Candidate 1: 2024-12-11T19:41:28Z
+  - Candidate 2: 2024-12-11T19:35:10Z
+  - Candidate 3: 2024-12-11T19:42:01Z
+- Assessment:
+  - The VAA ID matching Candidate 1 confirms this is the same bridging event; the ~14 minute gap to the BSC timestamp (19:41:28Z) is within a plausible cross-chain confirmation window for Wormhole.
+  - Candidates 2 and 3 either do not share the same VAA ID (426559 vs 426560; 426561 vs 426560) or, in Candidate 3’s case, appear as a separate event with a different recipient and a different amount. The timing alone does not rescue them from the VAA-ID mismatch.
+  - Conclusion: Timing supports Candidate 1 as the correct match when tied to the exact VAA ID.
+
+3) Asset flows (amount, recipient, and consistency with the VAA payload)
+- Source payload indicators:
+  - token_symbol: USDT
+  - amount: 550
+  - raw_amount: 550000000
+  - decimals: 6
+  - application_payload_recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299
+  - token_bridge: USDT; emitter/target chain alignment: Ethereum (2) -> BSC (4)
+- Destination candidates’ asset details:
+  - Candidate 1:
+    - amount: 550
+    - recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299
+    - vaa_id: 426560 (matches source)
+  - Candidate 2:
+    - amount: 550
+    - recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299
+    - vaa_id: 426559 (mismatch with source VAA)
+  - Candidate 3:
+    - amount: 549.8
+    - recipient: 0x9999999999999999999999999999999999999999
+    - vaa_id: 426561 (mismatch with source VAA) 
+- Assessment:
+  - Candidate 1 and Candidate 2 match the 550 amount in the obvious sense, but Candidate 2 fails the crucial VAA ID match (426559 vs 426560). Asset flow alone cannot override the VAA ID mismatch.
+  - Candidate 3 fails the asset flow expectation: the amount is 549.8 (not 550) and the recipient is a different address (0x9999...), which contradicts the VAA’s application_payload_recipient (0x48df9e8d...).
+  - The combination of exact amount and recipient that also aligns with the VAA ID is unique to Candidate 1.
+- Conclusion: Asset flow corroborates Candidate 1 as the true destination; Candidate 3 is ruled out for recipient/amount reasons; Candidate 2 is ruled out for VAA ID mismatch.
+
+4) Additional corroborating fields (for completeness)
+- Emitter/target mapping and addresses:
+  - Emitter chain = 2 (Ethereum) and emitter_address = 000...3ee18b2214aff97000d974cf647e7c347e8fa585 (Wormhole Ethereum Token Bridge), which matches the typical Wormhole bridge identity.
+  - Target chain = 4 (BS C), which matches Candidate 1’s chain/ID (wormhole_chain_id 4).
+  - Application recipient in VAA: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299, which Candidate 1 also shows as the on-chain recipient.
+  - The application_payload_recipient and the Candidate 1 recipient are identical, reinforcing the alignment between the VAA and the actual BSC delivery.
+- Status fields:
+  - All three show status "completed" at first glance, but cross-chain attribution requires the VAA ID alignment; only Candidate 1 has the matching VAA ID and correct recipient, making it the coherent single destination.
+
+Why the distractors are incorrect (summary)
+- Candidate 2: Incorrect because its VAA ID (426559) does not match the source VAA (426560). Despite having the same recipient and amount, the VAA sequence mismatch disqualifies it as the true destination.
+- Candidate 3: Incorrect because it has a mismatched VAA ID (426561), a different recipient (0x9999...), and an amount that does not exactly equal the source’s 550 (549.8). This represents a different transfer event and not the same cross-chain instruction anchored by the source VAA.
+- In short, the VAA ID is the principal anchor; timing and asset-flow checks only matter once the VAA ID matches. Candidate 1 uniquely satisfies VAA ID, recipient (application_payload_recipient), and amount, making it the true destination.
+
+Final conclusion
+- The true destination is Destination Candidate 1 (BSC, recipient 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299) with VAA ID 2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560, matching the source’s VAA, timing window, and the exact USDT amount flow. The two distractors fail on one or more of VAA ID, recipient, and amount, and are thus not the actual destination.

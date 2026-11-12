@@ -1,0 +1,53 @@
+model: gpt-5-mini
+reasoning_effort: high
+reasoning_tokens: 6336
+
+Short answer — the true destination is candidate #1: BSC tx 0x2d30d5cbb03e38fdadddfabc5af9cbcabf29531873ebf2ff461f76eba6a33693. Its VAA ID, recipient, amount and timing match the source message; the other two are distractors.
+
+Detailed logical matching
+
+1) Cryptographic identifier (VAA ID)
+- Message.vaa_id:
+  2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+- Candidate 1.vaa_id:
+  2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560
+  -> Exact match (chain/emitter/sequence all identical).
+- Candidate 2.vaa_id: .../426559 -> sequence differs (426559 != 426560).
+- Candidate 3.vaa_id: .../426561 -> sequence differs (426561 != 426560).
+
+Because the VAA ID is a cryptographic, unique fingerprint of the emitted Wormhole message (emitter chain + emitter address + sequence), only an exact VAA ID match can prove the destination redemption of that specific transfer. Candidate 1 is the only exact VAA match.
+
+2) Emitter and application/recipient fields
+- Source wormhole_token_bridge (Ethereum): 0x3ee18b2214aff97000d974cf647e7c347e8fa585
+- Message.emitter_address (zero-padded) corresponds to the same address above — confirms the VAA was emitted by the Ethereum token bridge.
+- Message.application_payload_recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299
+- Candidate 1.recipient: 0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299 -> exact match.
+- Candidate 2.recipient: same address (but see VAA mismatch above).
+- Candidate 3.recipient: 0x9999999999999999999999999999999999999999 -> different.
+
+The recipient match in candidate 1 is a supporting (secondary) confirmation; candidate 2 shares recipient but fails on the cryptographic ID.
+
+3) Asset flow (amounts and decimals)
+- Source: amount = "550" (raw_amount = 550000000, decimals = 6) => 550 USDT.
+- Candidate 1.amount = "550" -> exact match.
+- Candidate 2.amount = "550" -> matches amount but fails VAA ID.
+- Candidate 3.amount = "549.8" -> not equal (549.8 ≠ 550), indicating a different transfer or on-chain swap/slippage.
+
+4) Timing / sequence ordering
+- Source timestamp: 2024-12-11T19:27:11Z
+- Candidate 1 timestamp: 2024-12-11T19:41:28Z (delta = 14m17s) — plausible delay between VAA issuance and on-chain redeem on BSC.
+- Candidate 2 timestamp: 2024-12-11T19:35:10Z (delta = 7m59s) — earlier than candidate 1 but its sequence is 426559 (one less), consistent with it being a different, earlier VAA emission.
+- Candidate 3 timestamp: 2024-12-11T19:42:01Z (delta = 14m50s) — close in time to candidate 1 but its sequence (426561) and recipient/amount differ.
+
+Sequence numbers (426559, 426560, 426561) are monotonic per emitter; the only candidate whose sequence equals the message (426560) is candidate 1.
+
+Why the distractors are wrong
+- Candidate 2 (tx 0x1111...1111): Although amount and recipient match, its VAA ID is 2/.../426559 (sequence 426559) — a different VAA (one sequence lower). Cryptographic identifier does not match the message’s VAA (426560), so this redeems a different transfer.
+- Candidate 3 (tx 0x2222...2222): VAA ID is 2/.../426561 (sequence 426561) — different sequence; recipient is different (0x99...99) and amount is 549.8 (not 550). Multiple mismatches confirm this is a separate transfer (different user or post-redemption swap), not the redemption of the VAA in the message.
+
+Conclusion
+- Definitive match: Candidate 1 (BSC tx 0x2d30...3693) is the redemption of message VAA 2/.../426560 and thus the true destination for the Ethereum -> BSC Wormhole transfer of 550 USDT.
+- Root-cause for decision: exact VAA ID equality is cryptographic proof; recipient and amount match; timing is consistent. The other candidates fail the primary cryptographic match (VAA ID) and/or asset/recipient matching.
+
+Recommended verification step (optional)
+- Inspect the BSC tx logs for 0x2d30...3693: confirm the posted VAA bytes / submitVAA log and the completeTransfer/mint event that credits 550 USDT to 0x48df9e8d... — this will be direct on-chain confirmation of the link already shown by the VAA ID match.

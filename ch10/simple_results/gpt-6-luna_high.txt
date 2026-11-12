@@ -1,0 +1,24 @@
+model: gpt-6-luna
+reasoning_effort: high
+reasoning_tokens: 401
+
+## Match: Candidate 1
+
+The first BSC candidate is the only one that matches the source message’s **VAA ID**, and its recipient and asset amount also agree with the source data.
+
+| Check | Source transaction | Candidate 1 | Result |
+|---|---|---|---|
+| VAA ID | `2/0000000000000000000000003ee18b2214aff97000d974cf647e7c347e8fa585/426560` | Same | **Exact match** |
+| Destination chain | Target chain ID `4` (BSC) | BSC, chain ID `4` | Match |
+| Recipient | `0x48df9e8deaefec5e7438dc5ed8b8f22c3ea79299` | Same | Match |
+| Asset and amount | USDT, `550` | USDT, `550` | Match |
+| Timing | `19:27:11Z` | `19:41:28Z` | Destination is 14m 17s later |
+
+The VAA ID encodes emitter chain `2`, the Wormhole token-bridge emitter address, and sequence `426560`. Candidate 1 reproduces all three components exactly. Its completion time is after the Ethereum source event, and its reported USDT amount and recipient match the source message.
+
+## Why the other candidates are incorrect
+
+- **Candidate 2:** Its VAA ID ends in sequence `426559`, not `426560`. The recipient, token, and amount happen to match, but they do not make it the destination for this source message. Its timestamp—7m 59s after the source—cannot override the VAA sequence mismatch.
+- **Candidate 3:** Its VAA ID ends in sequence `426561`, so it is a different message. It also names a different recipient and reports `549.8` USDT rather than `550`. Its later timestamp does not resolve those mismatches.
+
+**Conclusion:** Based on the supplied JSON, Candidate 1 is the matching BSC destination. The VAA ID is the decisive link; timing and asset-flow details corroborate it. This is a logical match from the provided records, not an independent on-chain verification of the transaction.
